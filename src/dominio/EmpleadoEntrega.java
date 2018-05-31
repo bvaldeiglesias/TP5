@@ -10,5 +10,32 @@ package dominio;
  * @author Bruno
  */
 public class EmpleadoEntrega {
+    private int numero;
+    private EstadoEmpleadoEntrega estado;
+
+    public EmpleadoEntrega(int numero, EstadoEmpleadoEntrega estado) {
+        this.numero = numero;
+        this.estado = estado;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public EstadoEmpleadoEntrega getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoEmpleadoEntrega estado) {
+        this.estado = estado;
+    }
+    
+    public boolean estaLibre(){
+        return (estado == EstadoEmpleadoEntrega.LIBRE);
+    }
     
 }

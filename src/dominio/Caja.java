@@ -13,12 +13,21 @@ import generadoresPseudoAleatorios.GeneradorBoxMuller;
  */
 public class Caja {
     private EstadoCaja estado;
-    private GeneradorBoxMuller rndTiempoAtender;
 
-    public Caja(EstadoCaja estado, GeneradorBoxMuller rndTiempoAtender) {
+    public Caja(EstadoCaja estado) {
         this.estado = estado;
-        this.rndTiempoAtender = rndTiempoAtender;
+    }
+
+    public EstadoCaja getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoCaja estado) {
+        this.estado = estado;
     }
     
-    
+    public boolean estaLibre(){
+        return (estado == EstadoCaja.LIBRE);
+    }
+     
 }

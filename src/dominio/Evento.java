@@ -8,10 +8,10 @@ package dominio;
 public abstract class Evento implements Comparable<Evento> {
 
     protected long tiempo;
-//    protected Gestor g;
+    protected Gestor g;
 
-    protected Evento() {
-        
+    protected Evento(Gestor g) {
+        this.g = g;
     }
 
     public long getTiempo() {
