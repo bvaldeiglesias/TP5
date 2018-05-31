@@ -9,7 +9,7 @@ Trabajo Practico 5 de Simulacion 2018
 - No pushear codigo comentado (no confundirse con javadoc)
 - No crear `git branch` por persona, crear si y solo si van a trabajar mas de una persona en una funcionalidad.
 
-**Tema:** Simulación de Montecarlo
+**Tema:** Simulación de Colas
 
 **Enunciado:**
 
