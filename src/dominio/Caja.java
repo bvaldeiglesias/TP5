@@ -5,10 +5,20 @@
  */
 package dominio;
 
+import generadoresPseudoAleatorios.GeneradorBoxMuller;
+
 /**
  *
  * @author Bruno
  */
 public class Caja {
+    private EstadoCaja estado;
+    private GeneradorBoxMuller rndTiempoAtender;
+
+    public Caja(EstadoCaja estado, GeneradorBoxMuller rndTiempoAtender) {
+        this.estado = estado;
+        this.rndTiempoAtender = rndTiempoAtender;
+    }
+    
     
 }
