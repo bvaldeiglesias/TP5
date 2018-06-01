@@ -5,6 +5,8 @@
  */
 package main;
 
+import dominio.Evento;
+import dominio.Gestor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
@@ -35,10 +37,16 @@ public class MainFXMLController implements Initializable
     private TableView<Row> tblColas;
     @FXML
     private TextField txtCantIteraciones;
+    
+    private Gestor gestor;
 
+    
+    //Completar!!!
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        gestor = new Gestor(this);
+        
         tblColas.setEditable(true);
 
         TableColumn evento = new TableColumn("Evento");
@@ -75,21 +83,22 @@ public class MainFXMLController implements Initializable
         {
             desde = 1;
         }
-
         
-        for (int i = 0; i < cantidad; i++)
-        {
-            int experimento = i + 1;
+        
+        //corregir!!//
+        gestor.simular(cantidad, acumuladorCompras, desde, hasta, cantidad,
+                acumuladorCompras, acumuladorCompras, cantidad, cantidad, 
+                acumuladorCompras, cantidad, acumuladorCompras, acumuladorCompras, 
+                acumuladorCompras, desde, hasta, hasta);
+ 
+    }
 
-            if (experimento >= desde && experimento <= hasta)
-            {
-
-            }
-        }
+    public void addRow(Evento eventoActual){
+        //Implementar//
     }
 
     
-
+    //poner las columnas necesarias!!!
     public static class Row
     {
 

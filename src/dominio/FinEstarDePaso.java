@@ -10,9 +10,12 @@ package dominio;
  * @author Bruno
  */
 public class FinEstarDePaso extends Evento{
-
-    public FinEstarDePaso(Gestor g) {
+    private Cliente cliente;
+    
+    public FinEstarDePaso(Gestor g, Cliente cliente) {
         super(g);
+        this.cliente = cliente;
+        this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
     }
     
     @Override
@@ -41,7 +44,7 @@ public class FinEstarDePaso extends Evento{
 
     @Override
     public long calcularTiempo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (long) (g.getTiempoDePaso());
     }
     
 }

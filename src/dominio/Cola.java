@@ -30,7 +30,7 @@ public class Cola<T> {
         return cola.removeFirst();
     }
     
-    public int camionesEnCola(){
+    public int clientesEnCola(){
         return cola.size();
     }
     

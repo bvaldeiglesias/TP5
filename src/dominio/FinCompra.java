@@ -10,12 +10,12 @@ package dominio;
  * @author Bruno
  */
 public class FinCompra extends Evento{
-    private double rndAccion2;
+    
     private Cliente cliente;
     
     public FinCompra(Gestor g, Cliente cliente) {
         super(g);
-        this.rndAccion2 = g.getGeneradorAccion2().nextDouble();
+        
         this.cliente = cliente;
         this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
     }
@@ -36,10 +36,10 @@ public class FinCompra extends Evento{
         
         g.getCaja().setEstado(EstadoCaja.LIBRE);
         
-//        if(!g.getColaClientesCaja().estaVacia()){
-//            Cliente clienteComprar = g.getColaClientesCaja().avanzar();
-//            this.atenderCliente(clienteComprar, g.getCaja());
-//        }
+        if(!g.getColaClientesCaja().estaVacia()){
+            Cliente clienteComprar = g.getColaClientesCaja().avanzar();
+            this.atenderCliente(clienteComprar, g.getCaja());
+        }
         
         if(g.getEmpleadosEntrega().hayEmpleadoLibre()){
             this.servirCliente(cliente,g.getEmpleadosEntrega().getEmpleadoLibre());

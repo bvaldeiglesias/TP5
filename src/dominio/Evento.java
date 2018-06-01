@@ -46,14 +46,30 @@ public abstract class Evento implements Comparable<Evento> {
         cliente.setEstado(EstadoCliente.RECIBIENDO_ENTREGA);
         empleado.setEstado(EstadoEmpleadoEntrega.ATENDIENDO);
         
+        FinEntregaPedido evento = new FinEntregaPedido(g, cliente, empleado);
+        this.g.getConjuntoEventos().add(evento);
         
         
     }
     protected void ocuparMesa(Cliente cliente){
+        cliente.setEstado(EstadoCliente.OCUPANDO_MESA);
         
+        FinUtilizacionMesa evento = new FinUtilizacionMesa(g, cliente);
+        this.g.getConjuntoEventos().add(evento);
     }
-    protected void estarDePaso(Cliente cliente){
+    
+    protected void consumirPedidoEnMesa(Cliente cliente){
+        cliente.setEstado(EstadoCliente.CONSUMIENDO_PEDIDO_EN_MESA);
         
+        FinConsumicionPedido evento = new FinConsumicionPedido(g, cliente);
+        this.g.getConjuntoEventos().add(evento);
+    }
+    
+    protected void estarDePaso(Cliente cliente){
+        cliente.setEstado(EstadoCliente.DE_PASO);
+        
+        FinEstarDePaso evento = new FinEstarDePaso(g,cliente);
+        this.g.getConjuntoEventos().add(evento);
     }
     
 

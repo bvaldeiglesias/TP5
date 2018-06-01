@@ -10,9 +10,12 @@ package dominio;
  * @author Bruno
  */
 public class FinUtilizacionMesa extends Evento{
-
-    public FinUtilizacionMesa(Gestor g) {
+    private Cliente cliente;
+    
+    public FinUtilizacionMesa(Gestor g, Cliente cliente) {
         super(g);
+        this.cliente = cliente;
+        this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
     }
     
     @Override
@@ -22,7 +25,9 @@ public class FinUtilizacionMesa extends Evento{
 
     @Override
     public void ejecutarEvento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Parametro.getInstancia().setTiempoActual(tiempo);
+        
+        g.agregarTiempoATiempoPermanencia(Parametro.getInstancia().getTiempoActual() - this.cliente.getTiempoLlegada());
     }
 
     @Override
@@ -37,7 +42,7 @@ public class FinUtilizacionMesa extends Evento{
 
     @Override
     public long calcularTiempo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (long) (g.getGeneradorUtilizacionMesa().rnd());
     }
     
 }

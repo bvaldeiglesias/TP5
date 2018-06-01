@@ -11,9 +11,20 @@ package dominio;
  */
 public class FinEntregaPedido extends Evento{
     private Cliente cliente;
+    private double rndAccion2;
+    private EmpleadoEntrega empleado;
     
-    public FinEntregaPedido(Gestor g, Cliente cliente) {
+    public FinEntregaPedido(Gestor g, Cliente cliente, EmpleadoEntrega emp) {
         super(g);
+        this.cliente = cliente;
+        this.empleado = emp;
+        this.rndAccion2 = g.getGeneradorAccion2().nextDouble();
+        this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
+    }
+    
+    @Override
+    public long calcularTiempo() {
+        return (long) (g.getGeneradorEntregaPedido().rnd());
     }
     
     @Override
@@ -23,7 +34,20 @@ public class FinEntregaPedido extends Evento{
 
     @Override
     public void ejecutarEvento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Parametro.getInstancia().setTiempoActual(tiempo);
+        
+        this.empleado.setEstado(EstadoEmpleadoEntrega.LIBRE);
+        
+        if(!g.getColaClientesEntregaPedido().estaVacia()){
+            Cliente clienteComprar = g.getColaClientesEntregaPedido().avanzar();
+            this.servirCliente(clienteComprar, this.empleado);
+        }
+        
+        if(rndAccion2 < g.getTasaUtilizacionMesa()){
+            this.consumirPedidoEnMesa(cliente);
+        } else {
+            g.agregarTiempoATiempoPermanencia(Parametro.getInstancia().getTiempoActual() - this.cliente.getTiempoLlegada());
+        }
     }
 
     @Override
@@ -36,9 +60,6 @@ public class FinEntregaPedido extends Evento{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public long calcularTiempo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
 }

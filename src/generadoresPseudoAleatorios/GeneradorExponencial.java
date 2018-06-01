@@ -19,7 +19,6 @@ public class GeneradorExponencial
 
     public double rnd()
     {
-        
         double x = (-1 / lambda) * Math.log(1 - gnr.RND());
         return x;
     }

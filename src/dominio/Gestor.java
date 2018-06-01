@@ -8,6 +8,7 @@ package dominio;
 import generadoresPseudoAleatorios.*;
 import java.util.Random;
 import java.util.TreeSet;
+import main.MainFXMLController;
 
 /**
  *
@@ -36,11 +37,16 @@ public class Gestor {
     private double tiempoCompraTicket;
     private double tiempoConsumicion;
     private double tiempoUtilizacionMesa;
+    private double tiempoDePaso;
+    
+    private MainFXMLController controller;
 
-    public Gestor() {
+    public Gestor(MainFXMLController controller) {
         this.contadorGente = 0;
         this.cantIteraciones = 0;
 
+        this.controller = controller;
+        
         this.conjuntoEventos = new TreeSet<>();
         this.eventoActual = null;
         this.generadorAccion1 = new Random(673);
@@ -51,17 +57,18 @@ public class Gestor {
                         double tasaCompra, double tasaUtilizaMesas, double tasaOcupacionMesa, double tiempoCompraTicket,
                         double lambdaEntregaPedido, double tiempoConsumicion, double tiempoUtilizacionMesa,
                         double mediaConsumicionPedido, double desvStanConsumicionPedido,
-                        double mediaUtilizacionMesa, double desvStanUtilizacionMesa,
+                        double mediaUtilizacionMesa, double desvStanUtilizacionMesa,double tiempoDePaso,
                         int desde, int hasta){
         
         this.cantIteraciones = cantIteraciones;
         
         this.tasaCompra = tasaCompra;
-        this.tasaUtilizacionMesa = tasaUtilizacionMesa;
+        this.tasaUtilizacionMesa = tasaUtilizaMesas;
         this.tasaOcupacionMesa = tasaOcupacionMesa;
         this.tiempoCompraTicket = tiempoCompraTicket;
         this.tiempoConsumicion = tiempoConsumicion;
         this.tiempoUtilizacionMesa = tiempoUtilizacionMesa;
+        this.tiempoDePaso = tiempoDePaso;
         
         this.generadorLlegadaClientes = new GeneradorBoxMuller(desvStanLlegadaClientes, mediaLlegadaClientes);
         this.generadorConsumicionPedido = new GeneradorBoxMuller(desvStanConsumicionPedido, mediaConsumicionPedido);
@@ -85,7 +92,7 @@ public class Gestor {
             
             this.eventoActual.ejecutarEvento();
             if (desde <= i && i <= hasta) {
-                //Mostrar en Tabla//
+                this.controller.addRow(eventoActual);
             }
             
             if (eventoActual instanceof LlegadaCliente){
@@ -271,6 +278,19 @@ public class Gestor {
     public void setGeneradorAccion2(Random generadorAccion2) {
         this.generadorAccion2 = generadorAccion2;
     }
+    
+    public void agregarTiempoATiempoPermanencia(Long tiempo){
+        this.tiempoPermanencia += tiempo;
+    }
+
+    public double getTiempoDePaso() {
+        return tiempoDePaso;
+    }
+
+    public void setTiempoDePaso(double tiempoDePaso) {
+        this.tiempoDePaso = tiempoDePaso;
+    }
+    
     
     
 }

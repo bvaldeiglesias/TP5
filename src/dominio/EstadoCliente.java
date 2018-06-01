@@ -14,6 +14,7 @@ public enum EstadoCliente {
     COMPRANDO("Comprando"),
     RECIBIENDO_ENTREGA ("Recibiendo Entrega"),
     OCUPANDO_MESA("Ocupando Mesa"),
+    CONSUMIENDO_PEDIDO_EN_MESA("Consumiendo Pedido en Mesa"),
     DE_PASO("De Paso");
     
     private final String name;
