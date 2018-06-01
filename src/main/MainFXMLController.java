@@ -104,19 +104,29 @@ public class MainFXMLController implements Initializable
         int desde = Integer.parseInt(txtDesde.getText());
         int hasta = Integer.parseInt(txtHasta.getText());
         int cantidad = Integer.parseInt(txtCantIteraciones.getText());
-        int acumuladorCompras = 0;
-
+        
+        double mediaLlegada = Double.parseDouble(lblMediaLlegada.getText());
+        double desvEstLlegada  = Double.parseDouble(lblDesvEstLlegada.getText());
+        double tasaCompra = Double.parseDouble(lblTasaCompra.getText());
+        double tasaUtilizaMesa = Double.parseDouble(LblTasaUtilizaMesa.getText());
+        double tiempoCompraTicket = Double.parseDouble(lblTiempoCompraTicket.getText());
+        double tasaOcupacionMesa = Double.parseDouble(lblTasaOcupacionMesa.getText());
+        double lambdaEntregaPedido = Double.parseDouble(lblLambdaEntregaPedido.getText());
+        double mediaUtilizacionMesa = Double.parseDouble(lblMediaUtilizacionMesa.getText());
+        double desvEstUtilizacionMesa = Double.parseDouble(lblDesvEstUtilizacionMesa.getText());
+        double mediaConsumicionPedido = Double.parseDouble(lblMediaConsumicionPedido.getText());
+        double desvEstConsumicionPedido = Double.parseDouble(lblDesvEstConsumicionPedido.getText());
+        double tiempoDePaso = Double.parseDouble(lblTiempoDePaso.getText());
+        
         if (desde == 0)
         {
             desde = 1;
         }
         
-        
-        //corregir!!//
-        gestor.simular(cantidad, acumuladorCompras, desde, hasta, cantidad,
-                acumuladorCompras, acumuladorCompras, cantidad, cantidad, 
-                acumuladorCompras, cantidad, acumuladorCompras, acumuladorCompras, 
-                acumuladorCompras, desde, hasta, hasta);
+        gestor.simular(cantidad, mediaLlegada, desvEstLlegada, tasaCompra, tasaUtilizaMesa, tasaOcupacionMesa, 
+                tiempoCompraTicket, lambdaEntregaPedido, 1, 1, 
+                mediaConsumicionPedido, desvEstConsumicionPedido, mediaUtilizacionMesa, desvEstUtilizacionMesa, 
+                tiempoDePaso, desde, hasta);
  
     }
 
@@ -126,6 +136,31 @@ public class MainFXMLController implements Initializable
 
     @FXML
     private void handleChkEditar(ActionEvent event) {
+        lblMediaLlegada.setDisable(!chkEditar.isSelected());
+        lblDesvEstLlegada.setDisable(!chkEditar.isSelected());
+        lblTasaCompra.setDisable(!chkEditar.isSelected());
+        LblTasaUtilizaMesa.setDisable(!chkEditar.isSelected());
+        lblTiempoCompraTicket.setDisable(!chkEditar.isSelected());
+        lblTasaOcupacionMesa.setDisable(!chkEditar.isSelected());
+        lblLambdaEntregaPedido.setDisable(!chkEditar.isSelected());
+        lblMediaUtilizacionMesa.setDisable(!chkEditar.isSelected());
+        lblDesvEstUtilizacionMesa.setDisable(!chkEditar.isSelected());
+        lblMediaConsumicionPedido.setDisable(!chkEditar.isSelected());
+        lblDesvEstConsumicionPedido.setDisable(!chkEditar.isSelected());
+        lblTiempoDePaso.setDisable(!chkEditar.isSelected());
+        
+        lblMediaLlegada.setText("10");
+        lblDesvEstLlegada.setText("2");
+        lblTasaCompra.setText("30");
+        LblTasaUtilizaMesa.setText("20");
+        lblTiempoCompraTicket.setText("20");
+        lblTasaOcupacionMesa.setText("50");
+        lblLambdaEntregaPedido.setText("50");
+        lblMediaUtilizacionMesa.setText("5");
+        lblDesvEstUtilizacionMesa.setText("1");
+        lblMediaConsumicionPedido.setText("15");
+        lblDesvEstConsumicionPedido.setText("5");
+        lblTiempoDePaso.setText("1");
     }
 
     
