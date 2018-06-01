@@ -26,10 +26,21 @@ public class FinEntregaPedido extends Evento{
     public long calcularTiempo() {
         return (long) (g.getGeneradorEntregaPedido().rnd());
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+    
+    
     
     @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+         if (o != null && o instanceof FinEntregaPedido) {
+            FinEntregaPedido f = (FinEntregaPedido) o;
+            return (tiempo == f.tiempo && cliente == f.getCliente());
+        }
+        return false;
     }
 
     @Override
@@ -52,12 +63,14 @@ public class FinEntregaPedido extends Evento{
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        
+        return "Fin Entrega Pedido " + "Tiempo=" + this.tiempoString() + cliente;
+        
+  }
 
     @Override
     public String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Fin entrega Pedido " +this.cliente.getNumero();
     }
 
     

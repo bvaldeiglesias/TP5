@@ -20,8 +20,14 @@ public class FinUtilizacionMesa extends Evento{
     
     @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        
+        if (o != null && o instanceof FinUtilizacionMesa) {
+            FinUtilizacionMesa l = (FinUtilizacionMesa) o;
+            return (tiempo == l.tiempo);
+        }
+        return false;
+        
+   }
 
     @Override
     public void ejecutarEvento() {
@@ -32,12 +38,12 @@ public class FinUtilizacionMesa extends Evento{
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Fin Utilizacion Mesa: " + "Tiempo=" + this.tiempoString();
     }
 
     @Override
     public String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Fin Utilizacion Mesa";
     }
 
     @Override

@@ -25,9 +25,21 @@ public class FinCompra extends Evento{
         return (long) (g.getTiempoCompraTicket());
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+    
+    
+
     @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(o != null && o instanceof FinCompra){
+            FinCompra f = (FinCompra) o;
+            return (tiempo == f.tiempo && cliente == f.getCliente());
+            
+        }
+        return false;
+                      
     }
 
     @Override
@@ -52,12 +64,12 @@ public class FinCompra extends Evento{
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Fin de Compra: " + "Tiempo=" + this.tiempoString() + cliente;
     }
 
     @Override
     public String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Fin de compra" +this.cliente.getNumero();
     }
     
 }

@@ -20,7 +20,13 @@ public class FinConsumicionPedido extends Evento{
     
     @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (o != null && o instanceof FinConsumicionPedido) {
+            FinConsumicionPedido f = (FinConsumicionPedido) o;
+            return (tiempo == f.tiempo);
+        }
+        return false;
+        
+       
     }
 
     @Override
@@ -32,12 +38,14 @@ public class FinConsumicionPedido extends Evento{
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return "Fin Consumicion Pedido: " + "Tiempo=" + this.tiempoString();
+        
     }
 
     @Override
     public String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Fin consumicion Pedido";
     }
 
     @Override

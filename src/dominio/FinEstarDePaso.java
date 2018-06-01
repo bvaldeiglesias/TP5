@@ -34,12 +34,13 @@ public class FinEstarDePaso extends Evento{
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        
+        return "Fin Estar de paso: " + "Tiempo=" + this.tiempoString();
+   }
 
     @Override
     public String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Fin estar de paso";
     }
 
     @Override
