@@ -11,10 +11,8 @@ package dominio;
  */
 public enum EstadoEmpleadoEntrega {
     LIBRE("Libre"),
-    ATENDIENDO("Atendiendo"),
-    DESHABILIDADO ("Deshabilitado");
-    
-    
+    ATENDIENDO("Atendiendo");
+
     private final String name;
 
     private EstadoEmpleadoEntrega(String name) {

@@ -30,31 +30,32 @@ public abstract class Evento implements Comparable<Evento> {
     @Override
     public abstract boolean equals(Object o);
 
+    public abstract long calcularTiempo();
+    
     public abstract void ejecutarEvento();
 
-//    protected void descargarCamionEnSilo(Camion camionDescargar, Silo siloCargar) {
-//        int faltanteSilo = siloCargar.getFaltante();
-//        int cargaCamion = camionDescargar.getCargaActual();
-//        siloCargar.setEstado(EstadoSilo.CARGANDO);
-//        camionDescargar.setEstado(EstadoCamion.DESCARGANDO);
-//        
-//        this.g.getTuboAspirador().setCamion(camionDescargar);
-//        //LINEA NUEVA
-//        this.g.getTuboAspirador().setEstado(EstadoTuboAspirador.OCUPADO);
-//        
-//        if (faltanteSilo < cargaCamion) {
-//            FinLlenadoSilo evento = new FinLlenadoSilo(this.g, siloCargar, camionDescargar);
-//            this.g.getConjuntoEventos().add(evento);
-//        } else if (faltanteSilo == cargaCamion) {
-//            FinLlenadoSilo evento1 = new FinLlenadoSilo(this.g, siloCargar, camionDescargar);
-//            FinDescargaCamion evento2 = new FinDescargaCamion(this.g, siloCargar, camionDescargar);
-//            this.g.getConjuntoEventos().add(evento1);
-//            this.g.getConjuntoEventos().add(evento2);
-//        } else {
-//            FinDescargaCamion evento = new FinDescargaCamion(this.g, siloCargar, camionDescargar);
-//            this.g.getConjuntoEventos().add(evento);
-//        }
-//    }
+    protected void atenderCliente(Cliente cliente, Caja caja){
+        cliente.setEstado(EstadoCliente.COMPRANDO);
+        caja.setEstado(EstadoCaja.ATENDIENDO);
+        
+        FinCompra evento = new FinCompra(g, cliente);
+        this.g.getConjuntoEventos().add(evento);
+        
+    }
+    protected void servirCliente(Cliente cliente, EmpleadoEntrega empleado){
+        cliente.setEstado(EstadoCliente.RECIBIENDO_ENTREGA);
+        empleado.setEstado(EstadoEmpleadoEntrega.ATENDIENDO);
+        
+        
+        
+    }
+    protected void ocuparMesa(Cliente cliente){
+        
+    }
+    protected void estarDePaso(Cliente cliente){
+        
+    }
+    
 
     @Override
     public abstract String toString();

@@ -5,12 +5,17 @@
  */
 package dominio;
 
+import java.text.NumberFormat;
+
 /**
  *
  * @author Bruno
  */
 public class LlegadaCliente extends Evento {
     private Cliente cliente;
+    private double rndAccion1;
+    
+    private double rndLlegadaCliente;
     
     @Override
     public boolean equals(Object o) {
@@ -26,24 +31,53 @@ public class LlegadaCliente extends Evento {
         cliente = new Cliente();
         this.cliente.setNumero(Parametro.getInstancia().generarNumeroCliente());
         
+        this.rndAccion1 = g.getGeneradorAccion1().nextDouble();
+        this.rndLlegadaCliente = g.getGeneradorLlegadaClientes().rnd();
         
+        this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
+        this.cliente.setTiempoLlegada(this.tiempo);
     }
     
-    
+    @Override
+    public long calcularTiempo() {
+        return (long) (rndLlegadaCliente);
+    }
 
     @Override
     public void ejecutarEvento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Parametro.getInstancia().setTiempoActual(tiempo);
+
+        LlegadaCliente proximaLlegada = new LlegadaCliente(this.g);
+        this.g.getConjuntoEventos().add(proximaLlegada);
+        
+        if (rndAccion1 < g.getTasaCompra()){
+            if(!g.getCaja().estaLibre()){
+                this.cliente.setEstado(EstadoCliente.EN_COLA);
+                g.getColaClientesCaja().agregarItem(this.cliente);
+            } else {
+                this.atenderCliente(this.cliente, g.getCaja());
+            }
+            
+        } else if ( rndAccion1 < g.getTasaOcupacionMesa()){
+            this.ocuparMesa(this.cliente);
+        } else {
+            this.estarDePaso(this.cliente);
+        }
+        
+        
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
+        nf.setMinimumFractionDigits(2);
+        return "LlegadaCliente{" + "tiempo=" + this.tiempoString() + cliente + ", rndLlegada=" + nf.format(rndLlegadaCliente) + '}';
     }
 
     @Override
     public String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "LleCli_" + this.cliente.getNumero();
     }
 
     public Cliente getCliente() {

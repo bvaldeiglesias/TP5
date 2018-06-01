@@ -10,9 +10,19 @@ package dominio;
  * @author Bruno
  */
 public class FinCompra extends Evento{
-
-    public FinCompra(Gestor g) {
+    private double rndAccion2;
+    private Cliente cliente;
+    
+    public FinCompra(Gestor g, Cliente cliente) {
         super(g);
+        this.rndAccion2 = g.getGeneradorAccion2().nextDouble();
+        this.cliente = cliente;
+        this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
+    }
+    
+    @Override
+    public long calcularTiempo() {
+        return (long) (g.getTiempoCompraTicket());
     }
 
     @Override
@@ -22,7 +32,22 @@ public class FinCompra extends Evento{
 
     @Override
     public void ejecutarEvento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Parametro.getInstancia().setTiempoActual(tiempo);
+        
+        g.getCaja().setEstado(EstadoCaja.LIBRE);
+        
+//        if(!g.getColaClientesCaja().estaVacia()){
+//            Cliente clienteComprar = g.getColaClientesCaja().avanzar();
+//            this.atenderCliente(clienteComprar, g.getCaja());
+//        }
+        
+        if(g.getEmpleadosEntrega().hayEmpleadoLibre()){
+            this.servirCliente(cliente,g.getEmpleadosEntrega().getEmpleadoLibre());
+        }else{
+            this.cliente.setEstado(EstadoCliente.EN_COLA);
+            g.getColaClientesEntregaPedido().agregarItem(this.cliente);
+        }
+        
     }
 
     @Override

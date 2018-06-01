@@ -9,19 +9,16 @@ package dominio;
  *
  * @author Bruno
  */
-public class FinEstarDePaso extends Evento{
-
-    public FinEstarDePaso(Gestor g) {
+public class FinEntregaPedido extends Evento{
+    private Cliente cliente;
+    
+    public FinEntregaPedido(Gestor g, Cliente cliente) {
         super(g);
     }
     
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof FinEstarDePaso) {
-            FinEstarDePaso l = (FinEstarDePaso) o;
-            return (tiempo == l.tiempo);
-        }
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
