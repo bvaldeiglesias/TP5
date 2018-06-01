@@ -89,7 +89,10 @@ public class Gestor {
         this.iniciarSimulacion();
         
         for (int i = 1; i <= this.cantIteraciones; i++) {
+            
+            System.out.println(conjuntoEventos.toString());
             this.eventoActual = this.conjuntoEventos.pollFirst();
+            System.out.println(eventoActual.toString());
             
             this.eventoActual.ejecutarEvento();
             if (desde <= i && i <= hasta) {

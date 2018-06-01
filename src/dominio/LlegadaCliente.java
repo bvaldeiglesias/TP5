@@ -21,7 +21,7 @@ public class LlegadaCliente extends Evento {
     public boolean equals(Object o) {
         if (o != null && o instanceof LlegadaCliente) {
             LlegadaCliente l = (LlegadaCliente) o;
-            return (tiempo == l.tiempo && cliente == l.getCliente());
+            return (this.tiempo == l.tiempo && this.cliente == l.getCliente());
         }
         return false;
     }

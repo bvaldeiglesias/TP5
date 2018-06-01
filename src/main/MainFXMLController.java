@@ -9,6 +9,7 @@ import dominio.Evento;
 import dominio.Gestor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,22 +80,49 @@ public class MainFXMLController implements Initializable
         TableColumn evento = new TableColumn("Evento");
         TableColumn reloj = new TableColumn("Reloj");
         TableColumn rndLlegada1 = new TableColumn("RND Llegada 1");
-        TableColumn rndLlegada2 = new TableColumn("RND Llegada 2");
+        //TableColumn rndLlegada2 = new TableColumn("RND Llegada 2");
         TableColumn tiempoEntreLlegada = new TableColumn("Tiempo Entre Llegada");
         TableColumn proximaLlegada = new TableColumn("Proxima Llegada");
         TableColumn rndAccion = new TableColumn("RND Accion");
-        TableColumn Accion = new TableColumn("Accion");
-        TableColumn SumMinutosEstadia = new TableColumn("SUM Minutos Estadia");
-
-//        nroExperimento.setCellValueFactory(new PropertyValueFactory<>("nroExperimento"));
-//        rndRecuerdaMensaje.setCellValueFactory(new PropertyValueFactory<>("rndRecuerdaMensaje"));
-//        recuerdaMensaje.setCellValueFactory(new PropertyValueFactory<>("recuerdaMensaje"));
-//        rndComprarProducto.setCellValueFactory(new PropertyValueFactory<>("rndComprarProducto"));
-//        comprarProducto.setCellValueFactory(new PropertyValueFactory<>("comprarProducto"));
-//        acumuladorCompras.setCellValueFactory(new PropertyValueFactory<>("sumatoriaCompras"));
-
-        //tblMontecarlo.getColumns().addAll(nroExperimento, rndRecuerdaMensaje, recuerdaMensaje, rndComprarProducto, comprarProducto, acumuladorCompras);
-
+        TableColumn accion = new TableColumn("Accion");
+        TableColumn sumMinutosEstadia = new TableColumn("SUM Minutos Estadia");
+        //TableColumn ticket = new TableColumn("Ticket");
+        TableColumn rndEntrega = new TableColumn("RND Entrega");
+        TableColumn entrega = new TableColumn("Entrega");
+        TableColumn rndAccion2 = new TableColumn("RND Accion 2");
+        TableColumn accion2 = new TableColumn("Accion 2");
+        TableColumn rndTConsumicion = new TableColumn("RND Tiempo Consumicion");
+        TableColumn tConsumicion = new TableColumn("Tiempo Consumicion");
+        TableColumn consumicion = new TableColumn("Consumicion");
+        TableColumn rndTMesas = new TableColumn("RND T de Mesas");
+        TableColumn tMesas = new TableColumn("T de Mesas");
+        TableColumn utilizacionMesas = new TableColumn("Utilizacion Mesas");
+        
+        evento.setCellValueFactory(new PropertyValueFactory<>("evento"));
+        reloj.setCellValueFactory(new PropertyValueFactory<>("reloj"));
+        rndLlegada1.setCellValueFactory(new PropertyValueFactory<>("rndLlegada1"));
+        //rndLlegada2.setCellValueFactory(new PropertyValueFactory<>("rndLlegada2"));
+        tiempoEntreLlegada.setCellValueFactory(new PropertyValueFactory<>("tiempoEntreLlegada"));
+        proximaLlegada.setCellValueFactory(new PropertyValueFactory<>("proximaLlegada"));
+        rndAccion.setCellValueFactory(new PropertyValueFactory<>("rndAccion"));
+        accion.setCellValueFactory(new PropertyValueFactory<>("accion"));
+        sumMinutosEstadia.setCellValueFactory(new PropertyValueFactory<>("sumMinutosEstadia"));
+        //ticket.setCellValueFactory(new PropertyValueFactory<>("ticket"));
+        rndEntrega.setCellValueFactory(new PropertyValueFactory<>("rndEntrega"));
+        entrega.setCellValueFactory(new PropertyValueFactory<>("entrega"));
+        rndAccion2.setCellValueFactory(new PropertyValueFactory<>("rndAccion2"));
+        accion2.setCellValueFactory(new PropertyValueFactory<>("accion2"));
+        rndTConsumicion.setCellValueFactory(new PropertyValueFactory<>("rndTConsumicion"));
+        tConsumicion.setCellValueFactory(new PropertyValueFactory<>("tConsumicion"));
+        consumicion.setCellValueFactory(new PropertyValueFactory<>("consumicion"));
+        rndTMesas.setCellValueFactory(new PropertyValueFactory<>("rndTMesas"));
+        tMesas.setCellValueFactory(new PropertyValueFactory<>("tMesas"));
+        utilizacionMesas.setCellValueFactory(new PropertyValueFactory<>("utilizacionMesas"));
+        
+        tblColas.getColumns().addAll(evento,reloj,rndLlegada1,tiempoEntreLlegada,proximaLlegada,
+                                    rndAccion, accion, sumMinutosEstadia,rndEntrega, entrega, rndAccion2,
+                                    accion2,rndTConsumicion,tConsumicion,consumicion,rndTMesas,tMesas,utilizacionMesas);
+        
         tblColas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
@@ -172,81 +200,124 @@ public class MainFXMLController implements Initializable
     public static class Row
     {
 
-        private final SimpleStringProperty nroExperimento;
-        private final SimpleStringProperty rndRecuerdaMensaje;
-        private final SimpleStringProperty recuerdaMensaje;
-        private final SimpleStringProperty rndComprarProducto;
-        private final SimpleStringProperty comprarProducto;
-        private final SimpleStringProperty sumatoriaCompras;
+        private final SimpleStringProperty evento;
+        private final SimpleStringProperty reloj;
+        private final SimpleStringProperty rndLlegada;
+        private final SimpleStringProperty tiempoEntreLlegada;
+        private final SimpleStringProperty proximaLlegada;
+        private final SimpleStringProperty rndAccion;
+        private final SimpleStringProperty accion;
+        private final SimpleStringProperty SumMinutosEstadia;
+        private final SimpleStringProperty rndEntrega;
+        private final SimpleStringProperty entrega;
+        private final SimpleStringProperty rndAccion2;
+        private final SimpleStringProperty accion2;
+        private final SimpleStringProperty rndTConsumicion;
+        private final SimpleStringProperty tConsumicion;
+        private final SimpleStringProperty consumicion;
+        private final SimpleStringProperty rndTMesas;
+        private final SimpleStringProperty tMesas;
+        private final SimpleStringProperty utilizacionMesas;
 
-        private Row(String nroExperimento, String rndRecuerda, String recuerda, String rndComprar, String comprar, String sumComprar)
+        private Row(String evento, String reloj, String rndLlegada, String tiempoEntreLlegada, String proximaLlegada, String rndAccion,
+                     String accion, String SumMinutosEstadia, String rndEntrega, String entrega, String rndAccion2, String accion2,
+                     String rndTConsumicion, String tConsumicion, String consumicion, String rndTMesas,String tMesas,String utilizacionMesas)
         {
-            this.nroExperimento = new SimpleStringProperty(nroExperimento);
-            this.rndRecuerdaMensaje = new SimpleStringProperty(rndRecuerda);
-            this.rndComprarProducto = new SimpleStringProperty(rndComprar);
-            this.recuerdaMensaje = new SimpleStringProperty(recuerda);
-            this.comprarProducto = new SimpleStringProperty(comprar);
-            this.sumatoriaCompras = new SimpleStringProperty(sumComprar);
+            this.evento = new SimpleStringProperty(evento);
+            this.reloj = new SimpleStringProperty(reloj);
+            this.rndLlegada = new SimpleStringProperty(rndLlegada);
+            this.tiempoEntreLlegada = new SimpleStringProperty(tiempoEntreLlegada);
+            this.proximaLlegada = new SimpleStringProperty(proximaLlegada);
+            this.rndAccion = new SimpleStringProperty(rndAccion);
+            this.accion = new SimpleStringProperty(accion);
+            this.SumMinutosEstadia = new SimpleStringProperty(SumMinutosEstadia);
+            this.rndEntrega = new SimpleStringProperty(rndEntrega);
+            this.entrega = new SimpleStringProperty(entrega);
+            this.rndAccion2 = new SimpleStringProperty(rndAccion2);
+            this.accion2 = new SimpleStringProperty(accion2);
+            this.rndTConsumicion = new SimpleStringProperty(rndTConsumicion);
+            this.tConsumicion = new SimpleStringProperty(tConsumicion);
+            this.consumicion = new SimpleStringProperty(consumicion);
+            this.rndTMesas = new SimpleStringProperty(rndTMesas);
+            this.tMesas = new SimpleStringProperty(tMesas);
+            this.utilizacionMesas = new SimpleStringProperty(utilizacionMesas);
         }
 
-        public void setNroExperimento(String asd)
-        {
-            nroExperimento.set(asd);
+//        public void setNroExperimento(String asd)
+//        {
+//            nroExperimento.set(asd);
+//        }
+
+        public String getEvento() {
+            return evento.get();
         }
 
-        public void setRndRecuerda(String asd)
-        {
-            rndRecuerdaMensaje.set(asd);
+        public String getReloj() {
+            return reloj.get();
         }
 
-        public void setRndComprarProducto(String asd)
-        {
-            rndComprarProducto.set(asd);
+        public String getRndLlegada() {
+            return rndLlegada.get();
         }
 
-        public void setRecuerdaMensaje(String asd)
-        {
-            recuerdaMensaje.set(asd);
+        public String getTiempoEntreLlegada() {
+            return tiempoEntreLlegada.get();
         }
 
-        public void setComprarProducto(String asd)
-        {
-            comprarProducto.set(asd);
+        public String getProximaLlegada() {
+            return proximaLlegada.get();
         }
 
-        public void setsumatoriaCompras(String asd)
-        {
-            sumatoriaCompras.set(asd);
+        public String getRndAccion() {
+            return rndAccion.get();
         }
 
-        public String getNroExperimento()
-        {
-            return nroExperimento.get();
+        public String getAccion() {
+            return accion.get();
         }
 
-        public String getRndRecuerdaMensaje()
-        {
-            return rndRecuerdaMensaje.get();
+        public String getSumMinutosEstadia() {
+            return SumMinutosEstadia.get();
         }
 
-        public String getRecuerdaMensaje()
-        {
-            return recuerdaMensaje.get();
+        public String getRndEntrega() {
+            return rndEntrega.get();
         }
 
-        public String getRndComprarProducto()
-        {
-            return rndComprarProducto.get();
+        public String getEntrega() {
+            return entrega.get();
         }
 
-        public String getComprarProducto()
-        {
-            return comprarProducto.get();
+        public String getRndAccion2() {
+            return rndAccion2.get();
         }
 
-        public String getSumatoriaCompras()
-        {
-            return sumatoriaCompras.get();
+        public String getAccion2() {
+            return accion2.get();
+        }
+
+        public String getRndTConsumicion() {
+            return rndTConsumicion.get();
+        }
+
+        public String gettConsumicion() {
+            return tConsumicion.get();
+        }
+
+        public String getConsumicion() {
+            return consumicion.get();
+        }
+
+        public String getRndTMesas() {
+            return rndTMesas.get();
+        }
+
+        public String gettMesas() {
+            return tMesas.get();
+        }
+
+        public String getUtilizacionMesas() {
+            return utilizacionMesas.get();
         }
 
     }
