@@ -41,7 +41,7 @@
                         <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Cantidad de Iteracioness:" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                        <Label text="Cantidad de Iteraciones:" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>

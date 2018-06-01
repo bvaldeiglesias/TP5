@@ -72,7 +72,7 @@ public class MainFXMLController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        gestor = new Gestor(this);
+        
         
         tblColas.setEditable(true);
 
@@ -101,21 +101,23 @@ public class MainFXMLController implements Initializable
     @FXML
     private void handleBtnSimular(ActionEvent event)
     {
+        gestor = new Gestor(this);
+        
         int desde = Integer.parseInt(txtDesde.getText());
         int hasta = Integer.parseInt(txtHasta.getText());
         int cantidad = Integer.parseInt(txtCantIteraciones.getText());
         
-        double mediaLlegada = Double.parseDouble(lblMediaLlegada.getText());
-        double desvEstLlegada  = Double.parseDouble(lblDesvEstLlegada.getText());
-        double tasaCompra = Double.parseDouble(lblTasaCompra.getText());
-        double tasaUtilizaMesa = Double.parseDouble(LblTasaUtilizaMesa.getText());
+        double mediaLlegada = Double.parseDouble(lblMediaLlegada.getText())*60;
+        double desvEstLlegada  = Double.parseDouble(lblDesvEstLlegada.getText())*60;
+        double tasaCompra = Double.parseDouble(lblTasaCompra.getText())/100;
+        double tasaUtilizaMesa = Double.parseDouble(LblTasaUtilizaMesa.getText())/100;
         double tiempoCompraTicket = Double.parseDouble(lblTiempoCompraTicket.getText());
-        double tasaOcupacionMesa = Double.parseDouble(lblTasaOcupacionMesa.getText());
+        double tasaOcupacionMesa = Double.parseDouble(lblTasaOcupacionMesa.getText())/100;
         double lambdaEntregaPedido = Double.parseDouble(lblLambdaEntregaPedido.getText());
-        double mediaUtilizacionMesa = Double.parseDouble(lblMediaUtilizacionMesa.getText());
-        double desvEstUtilizacionMesa = Double.parseDouble(lblDesvEstUtilizacionMesa.getText());
-        double mediaConsumicionPedido = Double.parseDouble(lblMediaConsumicionPedido.getText());
-        double desvEstConsumicionPedido = Double.parseDouble(lblDesvEstConsumicionPedido.getText());
+        double mediaUtilizacionMesa = Double.parseDouble(lblMediaUtilizacionMesa.getText())*60;
+        double desvEstUtilizacionMesa = Double.parseDouble(lblDesvEstUtilizacionMesa.getText())*60;
+        double mediaConsumicionPedido = Double.parseDouble(lblMediaConsumicionPedido.getText())*60;
+        double desvEstConsumicionPedido = Double.parseDouble(lblDesvEstConsumicionPedido.getText())*60;
         double tiempoDePaso = Double.parseDouble(lblTiempoDePaso.getText());
         
         if (desde == 0)
@@ -127,7 +129,9 @@ public class MainFXMLController implements Initializable
                 tiempoCompraTicket, lambdaEntregaPedido, 1, 1, 
                 mediaConsumicionPedido, desvEstConsumicionPedido, mediaUtilizacionMesa, desvEstUtilizacionMesa, 
                 tiempoDePaso, desde, hasta);
- 
+        
+        
+        txtPromedio.setText(String.valueOf(gestor.getPromedio()));
     }
 
     public void addRow(Evento eventoActual){

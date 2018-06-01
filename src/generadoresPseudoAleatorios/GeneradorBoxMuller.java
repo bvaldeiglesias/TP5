@@ -11,6 +11,7 @@ public class GeneradorBoxMuller
     private double n1;
     private double n2;
     private boolean nextN1;
+    private boolean generado;
 
     public GeneradorBoxMuller()
     {
@@ -18,6 +19,7 @@ public class GeneradorBoxMuller
         media = 15;
         gnr = new Congruencial();
         this.nextN1 = true;
+        this.generado=false;
     }
 
     public GeneradorBoxMuller(double desv, double med)
@@ -26,6 +28,7 @@ public class GeneradorBoxMuller
         this.media = med;
         gnr = new Congruencial();
         this.nextN1 = true;
+        this.generado=false;
     }
 
     public void generarBoxMuller()
@@ -49,12 +52,17 @@ public class GeneradorBoxMuller
     }
     
     public double rnd(){
+        if(!generado){
+            this.generarBoxMuller();
+        }
         if(nextN1){
             this.nextN1 = false;
             return this.getN1();
         } else{
             this.nextN1 = true;
-            return this.getN2();
+            double aux = this.getN2();
+            this.generarBoxMuller();
+            return aux;
         }
     }
 }

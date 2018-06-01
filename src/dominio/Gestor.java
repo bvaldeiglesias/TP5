@@ -84,6 +84,7 @@ public class Gestor {
         this.caja = new Caja(EstadoCaja.LIBRE);
         
         this.colaClientesCaja = new Cola<>();
+        this.colaClientesEntregaPedido = new Cola<>();
         
         this.iniciarSimulacion();
         
@@ -291,6 +292,9 @@ public class Gestor {
         this.tiempoDePaso = tiempoDePaso;
     }
     
+    public Double getPromedio(){
+        return (double) tiempoPermanencia/contadorGente;
+    }
     
     
 }

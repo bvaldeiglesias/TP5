@@ -29,7 +29,9 @@ public class FinEstarDePaso extends Evento{
 
     @Override
     public void ejecutarEvento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Parametro.getInstancia().setTiempoActual(tiempo);
+        
+        g.agregarTiempoATiempoPermanencia(Parametro.getInstancia().getTiempoActual() - this.cliente.getTiempoLlegada());
     }
 
     @Override
