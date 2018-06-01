@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -39,6 +40,32 @@ public class MainFXMLController implements Initializable
     private TextField txtCantIteraciones;
     
     private Gestor gestor;
+    @FXML
+    private TextField lblMediaLlegada;
+    @FXML
+    private TextField lblDesvEstLlegada;
+    @FXML
+    private TextField lblTasaCompra;
+    @FXML
+    private TextField LblTasaUtilizaMesa;
+    @FXML
+    private TextField lblTiempoCompraTicket;
+    @FXML
+    private TextField lblTasaOcupacionMesa;
+    @FXML
+    private TextField lblLambdaEntregaPedido;
+    @FXML
+    private TextField lblMediaUtilizacionMesa;
+    @FXML
+    private TextField lblDesvEstUtilizacionMesa;
+    @FXML
+    private TextField lblMediaConsumicionPedido;
+    @FXML
+    private TextField lblDesvEstConsumicionPedido;
+    @FXML
+    private TextField lblTiempoDePaso;
+    @FXML
+    private CheckBox chkEditar;
 
     
     //Completar!!!
@@ -95,6 +122,10 @@ public class MainFXMLController implements Initializable
 
     public void addRow(Evento eventoActual){
         //Implementar//
+    }
+
+    @FXML
+    private void handleChkEditar(ActionEvent event) {
     }
 
     

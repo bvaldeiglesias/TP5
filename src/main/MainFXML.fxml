@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
@@ -13,8 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<TabPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainFXMLController">
+<TabPane prefHeight="789.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainFXMLController">
    <tabs>
       <Tab closable="false" text="Tabla">
          <content>
@@ -90,18 +90,75 @@
             </BorderPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Preferencias">
+      <Tab closable="false" text="Parametros">
          <content>
             <GridPane>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="196.0" minWidth="0.0" prefWidth="189.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="410.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="567.0" minWidth="0.0" prefWidth="122.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="548.0" minWidth="10.0" prefWidth="101.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="232.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <padding>
+                  <Insets left="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Label text="Llegada personas (Dist. Normal)" GridPane.rowIndex="1" />
+                  <Label text="Media (min):" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="lblMediaLlegada" disable="true" maxWidth="50.0" text="10" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label text="Desviacion Estandar (min):" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="lblDesvEstLlegada" disable="true" maxWidth="50.0" text="2" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Label text="Tasa Compra (%):" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="lblTasaCompra" disable="true" maxWidth="50.0" text="30" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Label text="Al llegar (primera accion)" GridPane.rowIndex="2" />
+                  <Label text="Tasa Utiliza Mesa (%):" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <TextField fx:id="LblTasaUtilizaMesa" disable="true" maxWidth="50.0" text="20" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Despues de Comprar" GridPane.rowIndex="4" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Caja" GridPane.rowIndex="3" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Tiempo de compra de ticket (seg)" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <TextField fx:id="lblTiempoCompraTicket" disable="true" maxWidth="50.0" text="20" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <Label text="Tasa se queda (%):" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <TextField fx:id="lblTasaOcupacionMesa" disable="true" maxWidth="50.0" text="50" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                  <Label text="Entrega Pedido (exp neg)" GridPane.rowIndex="5" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="Lamda" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <TextField fx:id="lblLambdaEntregaPedido" disable="true" maxWidth="50.0" text="50" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                  <Label text="Tiempo Consumicion (D. N.)" GridPane.rowIndex="6" />
+                  <Label text="Tiempo Utilizacion Mesa (D. N.)" GridPane.rowIndex="7" />
+                  <Label text="Media (min):" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <Label text="Media (min):" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <Label text="Desviacion Estandar (min):" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <Label text="Desviacion Estandar (min):" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="lblMediaUtilizacionMesa" disable="true" maxWidth="50.0" text="15" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                  <TextField fx:id="lblDesvEstUtilizacionMesa" disable="true" maxWidth="50.0" text="5" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+                  <TextField fx:id="lblMediaConsumicionPedido" disable="true" maxWidth="50.0" text="5" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                  <TextField fx:id="lblDesvEstConsumicionPedido" disable="true" maxWidth="50.0" text="1" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                  <TextField fx:id="lblTiempoDePaso" disable="true" maxWidth="50.0" text="1" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+                  <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label text="Tiempo de Paso" GridPane.rowIndex="8" />
+                  <Label text="Tiempo (seg)" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                  <CheckBox fx:id="chkEditar" mnemonicParsing="false" onAction="#handleChkEditar" text="Editar parametros" GridPane.halignment="CENTER" />
+               </children>
             </GridPane>
          </content>
       </Tab>
