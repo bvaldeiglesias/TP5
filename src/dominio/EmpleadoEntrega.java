@@ -37,5 +37,11 @@ public class EmpleadoEntrega {
     public boolean estaLibre(){
         return (estado == EstadoEmpleadoEntrega.LIBRE);
     }
+
+    @Override
+    public String toString() {
+        return "EmpleadoEntrega{" + "numero=" + numero + ", estado=" + estado.getName() + '}';
+    }
+    
     
 }

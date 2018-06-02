@@ -33,5 +33,20 @@ public class Cola<T> {
     public int clientesEnCola(){
         return cola.size();
     }
+
+    @Override
+    public String toString() {
+        if (cola.isEmpty()) {
+            return "Cola{ -empty- }";
+        }
+        StringBuilder r = new StringBuilder("Cola{" + "\n          ");
+        cola.forEach((t) -> {
+            r.append(t.toString()).append("\n          ");
+        });
+        r.append("}");
+        return r.toString();
+    }
+    
+    
     
 }

@@ -39,7 +39,7 @@ public class FinConsumicionPedido extends Evento{
     @Override
     public String toString() {
         
-        return "Fin Consumicion Pedido: " + "Tiempo=" + this.tiempoString();
+        return "\n          Fin Consumicion Pedido = {" + "Tiempo = " + this.tiempoString()+", " + cliente.toString()+"}";
         
     }
 

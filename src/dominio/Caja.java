@@ -29,5 +29,11 @@ public class Caja {
     public boolean estaLibre(){
         return (estado == EstadoCaja.LIBRE);
     }
+
+    @Override
+    public String toString() {
+        return "Caja{" + "estado=" + estado + '}';
+    }
+    
      
 }

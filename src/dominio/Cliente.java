@@ -18,6 +18,7 @@ class Cliente {
     
 
     public Cliente() {
+        this.estado = EstadoCliente.FUERA_SISTEMA;
     }
 
     public Cliente(EstadoCliente estado, int numero, long tiempoLlegada) {
@@ -49,6 +50,12 @@ class Cliente {
     public void setTiempoLlegada(long tiempoLlegada) {
         this.tiempoLlegada = tiempoLlegada;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{ " + "estado = " + estado.getName() + ", numero = " + numero + ", tiempoLlegada = " + tiempoLlegada + '}';
+    }
+    
     
     
 }

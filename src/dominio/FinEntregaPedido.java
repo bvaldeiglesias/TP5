@@ -54,7 +54,7 @@ public class FinEntregaPedido extends Evento{
             this.servirCliente(clienteComprar, this.empleado);
         }
         
-        if(rndAccion2 < g.getTasaUtilizacionMesa()){
+        if(rndAccion2 < g.getTasaOcupacionMesa()){
             this.consumirPedidoEnMesa(cliente);
         } else {
             g.agregarTiempoATiempoPermanencia(Parametro.getInstancia().getTiempoActual() - this.cliente.getTiempoLlegada());
@@ -64,7 +64,7 @@ public class FinEntregaPedido extends Evento{
     @Override
     public String toString() {
         
-        return "Fin Entrega Pedido " + "Tiempo=" + this.tiempoString() + cliente;
+        return "\n          Fin Entrega Pedido = {" + "Tiempo = " + this.tiempoString()+", " + cliente.toString()+"}";
         
   }
 

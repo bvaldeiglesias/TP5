@@ -14,8 +14,10 @@ import java.text.NumberFormat;
 public class LlegadaCliente extends Evento {
     private Cliente cliente;
     private double rndAccion1;
+    private long llegadaSiguienteCliente;
+    private String accion1;
     
-    private double rndLlegadaCliente;
+    private double rndLlegadaProximoCliente;
     
     @Override
     public boolean equals(Object o) {
@@ -26,31 +28,34 @@ public class LlegadaCliente extends Evento {
         return false;
     }
 
-    public LlegadaCliente(Gestor g) {
+    public LlegadaCliente(Gestor g, long tiempoLlegada) {
         super(g);
         cliente = new Cliente();
         this.cliente.setNumero(Parametro.getInstancia().generarNumeroCliente());
         
         this.rndAccion1 = g.getGeneradorAccion1().nextDouble();
-        this.rndLlegadaCliente = g.getGeneradorLlegadaClientes().rnd();
+        this.rndLlegadaProximoCliente = g.getGeneradorLlegadaClientes().rnd();
         
-        this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
-        this.cliente.setTiempoLlegada(this.tiempo);
+        this.tiempo = this.calcularTiempo() + Parametro.getInstancia().getTiempoActual();
+        this.cliente.setTiempoLlegada(tiempoLlegada);
     }
     
     @Override
     public long calcularTiempo() {
-        return (long) (rndLlegadaCliente);
+        return (long) (rndLlegadaProximoCliente);
     }
 
     @Override
     public void ejecutarEvento() {
-        Parametro.getInstancia().setTiempoActual(tiempo);
-
-        LlegadaCliente proximaLlegada = new LlegadaCliente(this.g);
-        this.g.getConjuntoEventos().add(proximaLlegada);
+        Parametro.getInstancia().setTiempoActual(cliente.getTiempoLlegada());
+        llegadaSiguienteCliente = Parametro.getInstancia().getTiempoActual() + (long) rndLlegadaProximoCliente;
+        LlegadaCliente proximaLlegada = new LlegadaCliente(this.g, this.llegadaSiguienteCliente);
+        while(!this.g.getConjuntoEventos().add(proximaLlegada)){
+            proximaLlegada.corregir();
+        }
         
         if (rndAccion1 < g.getTasaCompra()){
+            accion1 = "Compra";
             if(!g.getCaja().estaLibre()){
                 this.cliente.setEstado(EstadoCliente.EN_COLA);
                 g.getColaClientesCaja().agregarItem(this.cliente);
@@ -58,9 +63,11 @@ public class LlegadaCliente extends Evento {
                 this.atenderCliente(this.cliente, g.getCaja());
             }
             
-        } else if ( rndAccion1 < g.getTasaOcupacionMesa()){
+        } else if ( rndAccion1 < (g.getTasaCompra()+g.getTasaUtilizacionMesa())){
+            accion1 = "Ocupa Mesa";
             this.ocuparMesa(this.cliente);
         } else {
+            accion1 = "Esta de Paso";
             this.estarDePaso(this.cliente);
         }
         
@@ -72,7 +79,7 @@ public class LlegadaCliente extends Evento {
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMaximumFractionDigits(2);
         nf.setMinimumFractionDigits(2);
-        return "LlegadaCliente{" + "tiempo=" + this.tiempoString() + cliente + ", rndLlegada=" + nf.format(rndLlegadaCliente) + '}';
+        return "\n          LlegadaCliente = {" + " Tiempo = " + this.tiempoString() +", "+ cliente.toString() + ", rndLlegada=" + nf.format(rndLlegadaProximoCliente) + "}";
     }
 
     @Override
@@ -87,6 +94,47 @@ public class LlegadaCliente extends Evento {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public double getRndAccion1() {
+        return rndAccion1;
+    }
+
+    public void setRndAccion1(double rndAccion1) {
+        this.rndAccion1 = rndAccion1;
+    }
+
+    public double getRndLlegadaCliente() {
+        return this.rndLlegadaProximoCliente;
+    }
+
+    public void setRndLlegadaCliente(double rndLlegadaCliente) {
+        this.rndLlegadaProximoCliente = rndLlegadaCliente;
+    }
+
+    public String getAccion1() {
+        return accion1;
+    }
+
+    public void setAccion1(String accion1) {
+        this.accion1 = accion1;
+    }
+
+    public long getLlegadaSiguienteCliente() {
+        return llegadaSiguienteCliente;
+    }
+
+    public void setLlegadaSiguienteCliente(long llegadaSiguienteCliente) {
+        this.llegadaSiguienteCliente = llegadaSiguienteCliente;
+    }
+
+    public double getRndLlegadaProximoCliente() {
+        return rndLlegadaProximoCliente;
+    }
+
+    public void setRndLlegadaProximoCliente(double rndLlegadaProximoCliente) {
+        this.rndLlegadaProximoCliente = rndLlegadaProximoCliente;
+    }
+    
     
     
     

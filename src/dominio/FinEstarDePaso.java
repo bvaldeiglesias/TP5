@@ -37,7 +37,7 @@ public class FinEstarDePaso extends Evento{
     @Override
     public String toString() {
         
-        return "Fin Estar de paso: " + "Tiempo=" + this.tiempoString();
+        return "\n          Fin Estar de paso = {" + "Tiempo=" + this.tiempoString()+", "+ cliente.toString()+"}";
    }
 
     @Override

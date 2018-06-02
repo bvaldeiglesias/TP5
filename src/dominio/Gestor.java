@@ -35,8 +35,6 @@ public class Gestor {
     private double tasaUtilizacionMesa;
     private double tasaOcupacionMesa;
     private double tiempoCompraTicket;
-    private double tiempoConsumicion;
-    private double tiempoUtilizacionMesa;
     private double tiempoDePaso;
     
     private MainFXMLController controller;
@@ -55,7 +53,7 @@ public class Gestor {
     
     public void simular(int cantIteraciones, double mediaLlegadaClientes, double desvStanLlegadaClientes, 
                         double tasaCompra, double tasaUtilizaMesas, double tasaOcupacionMesa, double tiempoCompraTicket,
-                        double lambdaEntregaPedido, double tiempoConsumicion, double tiempoUtilizacionMesa,
+                        double lambdaEntregaPedido,
                         double mediaConsumicionPedido, double desvStanConsumicionPedido,
                         double mediaUtilizacionMesa, double desvStanUtilizacionMesa,double tiempoDePaso,
                         int desde, int hasta){
@@ -66,8 +64,6 @@ public class Gestor {
         this.tasaUtilizacionMesa = tasaUtilizaMesas;
         this.tasaOcupacionMesa = tasaOcupacionMesa;
         this.tiempoCompraTicket = tiempoCompraTicket;
-        this.tiempoConsumicion = tiempoConsumicion;
-        this.tiempoUtilizacionMesa = tiempoUtilizacionMesa;
         this.tiempoDePaso = tiempoDePaso;
         
         this.generadorLlegadaClientes = new GeneradorBoxMuller(desvStanLlegadaClientes, mediaLlegadaClientes);
@@ -89,14 +85,11 @@ public class Gestor {
         this.iniciarSimulacion();
         
         for (int i = 1; i <= this.cantIteraciones; i++) {
-            
-            System.out.println(conjuntoEventos.toString());
             this.eventoActual = this.conjuntoEventos.pollFirst();
-            System.out.println(eventoActual.toString());
             
             this.eventoActual.ejecutarEvento();
             if (desde <= i && i <= hasta) {
-                this.controller.addRow(eventoActual);
+                this.controller.addRow(eventoActual , tiempoPermanencia);
             }
             
             if (eventoActual instanceof LlegadaCliente){
@@ -106,7 +99,7 @@ public class Gestor {
         }
         
     }
-
+    
     public double getTasaCompra() {
         return tasaCompra;
     }
@@ -137,29 +130,11 @@ public class Gestor {
 
     public void setTiempoCompraTicket(double tiempoCompraTicket) {
         this.tiempoCompraTicket = tiempoCompraTicket;
-    }
-
-    public double getTiempoConsumicion() {
-        return tiempoConsumicion;
-    }
-
-    public void setTiempoConsumicion(double tiempoConsumicion) {
-        this.tiempoConsumicion = tiempoConsumicion;
-    }
-
-    public double getTiempoUtilizacionMesa() {
-        return tiempoUtilizacionMesa;
-    }
-
-    public void setTiempoUtilizacionMesa(double tiempoUtilizacionMesa) {
-        this.tiempoUtilizacionMesa = tiempoUtilizacionMesa;
-    }
-    
-    
+    } 
     
     public void iniciarSimulacion(){
         Parametro.getInstancia().setTiempoActual(0);
-        LlegadaCliente evento = new LlegadaCliente(this);        
+        LlegadaCliente evento = new LlegadaCliente(this , 0);        
         this.conjuntoEventos.add(evento);
     }
 
@@ -295,8 +270,13 @@ public class Gestor {
         this.tiempoDePaso = tiempoDePaso;
     }
     
-    public Double getPromedio(){
-        return (double) tiempoPermanencia/contadorGente;
+    public long getPromedio(){
+        return (long) tiempoPermanencia/contadorGente;
+    }
+
+    @Override
+    public String toString() {
+        return "Gestor{" + "\n    Contador Gente = " + contadorGente + ", \n    Tiempo Permanencia = " + tiempoPermanencia + ", \n    Cola de Clientes en Caja = " + colaClientesCaja + ", \n    Cola de Clientes en Entrega Pedido = " + colaClientesEntregaPedido + ", \n    Cantidad Iteraciones = " + cantIteraciones + ", \n    Ultimo Evento = " + eventoActual + ", \n    Conjunto de Eventos = " + conjuntoEventos + ", \n    Caja = " + caja + ", \n    Empleados Entrega = " + empleadosEntrega.toString() + '}';
     }
     
     

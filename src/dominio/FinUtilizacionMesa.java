@@ -38,7 +38,7 @@ public class FinUtilizacionMesa extends Evento{
 
     @Override
     public String toString() {
-        return "Fin Utilizacion Mesa: " + "Tiempo=" + this.tiempoString();
+        return "\n          Fin Utilizacion Mesa = {" + "Tiempo=" + this.tiempoString()+", "+cliente.toString() + "}";
     }
 
     @Override

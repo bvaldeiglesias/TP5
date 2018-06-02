@@ -39,7 +39,9 @@ public abstract class Evento implements Comparable<Evento> {
         caja.setEstado(EstadoCaja.ATENDIENDO);
         
         FinCompra evento = new FinCompra(g, cliente);
-        this.g.getConjuntoEventos().add(evento);
+        while(!this.g.getConjuntoEventos().add(evento)){
+            evento.corregir();
+        }
         
     }
     protected void servirCliente(Cliente cliente, EmpleadoEntrega empleado){
@@ -47,7 +49,9 @@ public abstract class Evento implements Comparable<Evento> {
         empleado.setEstado(EstadoEmpleadoEntrega.ATENDIENDO);
         
         FinEntregaPedido evento = new FinEntregaPedido(g, cliente, empleado);
-        this.g.getConjuntoEventos().add(evento);
+        while(!this.g.getConjuntoEventos().add(evento)){
+            evento.corregir();
+        }
         
         
     }
@@ -55,21 +59,27 @@ public abstract class Evento implements Comparable<Evento> {
         cliente.setEstado(EstadoCliente.OCUPANDO_MESA);
         
         FinUtilizacionMesa evento = new FinUtilizacionMesa(g, cliente);
-        this.g.getConjuntoEventos().add(evento);
+        while(!this.g.getConjuntoEventos().add(evento)){
+            evento.corregir();
+        }
     }
     
     protected void consumirPedidoEnMesa(Cliente cliente){
         cliente.setEstado(EstadoCliente.CONSUMIENDO_PEDIDO_EN_MESA);
         
         FinConsumicionPedido evento = new FinConsumicionPedido(g, cliente);
-        this.g.getConjuntoEventos().add(evento);
+        while(!this.g.getConjuntoEventos().add(evento)){
+            evento.corregir();
+        }
     }
     
     protected void estarDePaso(Cliente cliente){
         cliente.setEstado(EstadoCliente.DE_PASO);
         
         FinEstarDePaso evento = new FinEstarDePaso(g,cliente);
-        this.g.getConjuntoEventos().add(evento);
+        while(!this.g.getConjuntoEventos().add(evento)){
+            evento.corregir();
+        }
     }
     
 
@@ -90,4 +100,8 @@ public abstract class Evento implements Comparable<Evento> {
     }
 
     public abstract String getNombre();
+    
+    public void corregir(){
+        this.tiempo+=1;
+    }
 }

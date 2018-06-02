@@ -57,5 +57,19 @@ public class ConjuntoEmpleados {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+         if (list.isEmpty()) {
+            return "Lista{ -empty- }";
+        }
+        StringBuilder r = new StringBuilder("Lista{" + "\n          ");
+        list.forEach((t) -> {
+            r.append(t.toString()).append("\n          ");
+        });
+        r.append("}");
+        return r.toString();
+    }
+    
     
 }
