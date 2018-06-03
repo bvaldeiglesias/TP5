@@ -12,6 +12,8 @@ public class GeneradorBoxMuller
     private double n2;
     private boolean nextN1;
     private boolean generado;
+    double rnd1;
+    double rnd2;        
 
     public GeneradorBoxMuller()
     {
@@ -33,8 +35,8 @@ public class GeneradorBoxMuller
 
     public void generarBoxMuller()
     {
-        double rnd1 = (double) gnr.RND();
-        double rnd2 = (double) gnr.RND();
+        rnd1 = (double) gnr.RND();
+        rnd2 = (double) gnr.RND();
         double adentro_raiz = (double) ((double) -2*Math.log(rnd1));
         double argumento = (double) 2*phi*rnd2;
         n1 = (double) (desv_est*Math.sqrt(adentro_raiz)*Math.cos(argumento))+media;
@@ -65,6 +67,7 @@ public class GeneradorBoxMuller
             return aux;
         }
     }
+    
 }
 
 //    public static void main(String[] args)

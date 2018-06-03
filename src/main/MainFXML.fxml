@@ -8,13 +8,14 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane prefHeight="789.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainFXMLController">
+<TabPane prefHeight="536.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainFXMLController">
    <tabs>
       <Tab closable="false" text="Tabla">
          <content>
@@ -28,8 +29,8 @@
                <bottom>
                   <GridPane BorderPane.alignment="CENTER">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="25.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="265.0" />
@@ -46,10 +47,13 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="txtCantIteraciones" GridPane.columnIndex="1" GridPane.valignment="CENTER">
+                        <TextField fx:id="txtCantIteraciones" maxHeight="26.0" maxWidth="100.0" GridPane.columnIndex="1" GridPane.valignment="CENTER">
                            <opaqueInsets>
                               <Insets bottom="2.0" />
                            </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
                         </TextField>
                         <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" />
                         <Label text="Promedio permanencia:" GridPane.columnIndex="4" GridPane.halignment="RIGHT">
@@ -57,7 +61,10 @@
                               <Insets right="10.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="txtPromedio" editable="false" GridPane.columnIndex="5" />
+                        <TextField fx:id="txtPromedio" editable="false" maxWidth="100.0" GridPane.columnIndex="5">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin></TextField>
                         <Button fx:id="btnSimular" mnemonicParsing="false" onAction="#handleBtnSimular" text="Simular" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label text="Hasta:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <GridPane.margin>
@@ -69,15 +76,21 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="txtDesde" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="txtDesde" maxHeight="26.0" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <opaqueInsets>
                               <Insets bottom="2.0" top="1.0" />
                            </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="txtHasta" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="txtHasta" maxHeight="26.0" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <opaqueInsets>
                               <Insets top="1.0" />
                            </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </GridPane.margin>
                         </TextField>
                         <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
@@ -118,9 +131,9 @@
                </padding>
                <children>
                   <Label text="Llegada personas (Dist. Normal)" GridPane.rowIndex="1" />
-                  <Label text="Media (min):" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Media (seg):" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <TextField fx:id="lblMediaLlegada" disable="true" maxWidth="50.0" text="10" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Label text="Desviacion Estandar (min):" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Label text="Desviacion Estandar (seg):" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <TextField fx:id="lblDesvEstLlegada" disable="true" maxWidth="50.0" text="2" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <Label text="Tasa Compra (%):" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <TextField fx:id="lblTasaCompra" disable="true" maxWidth="50.0" text="30" GridPane.columnIndex="3" GridPane.rowIndex="2" />
@@ -139,7 +152,7 @@
                   <TextField fx:id="lblTasaOcupacionMesa" disable="true" maxWidth="50.0" text="50" GridPane.columnIndex="5" GridPane.rowIndex="4" />
                   <Label text="Entrega Pedido (exp neg)" GridPane.rowIndex="5" />
                   <Separator maxHeight="50.0" orientation="VERTICAL" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="Lamda" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <Label text="Media:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                   <TextField fx:id="lblLambdaEntregaPedido" disable="true" maxWidth="50.0" text="50" GridPane.columnIndex="5" GridPane.rowIndex="5" />
                   <Label text="Tiempo Consumicion (D. N.)" GridPane.rowIndex="6" />
                   <Label text="Tiempo Utilizacion Mesa (D. N.)" GridPane.rowIndex="7" />
@@ -160,6 +173,19 @@
                   <CheckBox fx:id="chkEditar" mnemonicParsing="false" onAction="#handleChkEditar" text="Editar parametros" GridPane.halignment="CENTER" />
                </children>
             </GridPane>
+         </content>
+      </Tab>
+      <Tab text="Datos del sistema">
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <TextArea fx:id="txtDatosSistema" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                     </BorderPane.margin>
+                  </TextArea>
+               </center>
+            </BorderPane>
          </content>
       </Tab>
    </tabs>

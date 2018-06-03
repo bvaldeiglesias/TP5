@@ -5,11 +5,11 @@
  */
 package main;
 
-import dominio.Evento;
+import dominio.*;
 import dominio.Gestor;
+import dominio.LlegadaCliente;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -68,6 +69,9 @@ public class MainFXMLController implements Initializable
     @FXML
     private CheckBox chkEditar;
 
+    private int contador;   
+    @FXML
+    private TextArea txtDatosSistema;
     
     //Completar!!!
     @Override
@@ -76,17 +80,16 @@ public class MainFXMLController implements Initializable
         
         
         tblColas.setEditable(true);
-
+        
+        TableColumn iteracion = new TableColumn("N");
         TableColumn evento = new TableColumn("Evento");
         TableColumn reloj = new TableColumn("Reloj");
         TableColumn rndLlegada1 = new TableColumn("RND Llegada 1");
-        //TableColumn rndLlegada2 = new TableColumn("RND Llegada 2");
         TableColumn tiempoEntreLlegada = new TableColumn("Tiempo Entre Llegada");
         TableColumn proximaLlegada = new TableColumn("Proxima Llegada");
         TableColumn rndAccion = new TableColumn("RND Accion");
         TableColumn accion = new TableColumn("Accion");
         TableColumn sumMinutosEstadia = new TableColumn("SUM Minutos Estadia");
-        //TableColumn ticket = new TableColumn("Ticket");
         TableColumn rndEntrega = new TableColumn("RND Entrega");
         TableColumn entrega = new TableColumn("Entrega");
         TableColumn rndAccion2 = new TableColumn("RND Accion 2");
@@ -98,9 +101,10 @@ public class MainFXMLController implements Initializable
         TableColumn tMesas = new TableColumn("T de Mesas");
         TableColumn utilizacionMesas = new TableColumn("Utilizacion Mesas");
         
+        iteracion.setCellValueFactory(new PropertyValueFactory<>("iteracion"));
         evento.setCellValueFactory(new PropertyValueFactory<>("evento"));
         reloj.setCellValueFactory(new PropertyValueFactory<>("reloj"));
-        rndLlegada1.setCellValueFactory(new PropertyValueFactory<>("rndLlegada1"));
+        rndLlegada1.setCellValueFactory(new PropertyValueFactory<>("rndLlegada"));
         //rndLlegada2.setCellValueFactory(new PropertyValueFactory<>("rndLlegada2"));
         tiempoEntreLlegada.setCellValueFactory(new PropertyValueFactory<>("tiempoEntreLlegada"));
         proximaLlegada.setCellValueFactory(new PropertyValueFactory<>("proximaLlegada"));
@@ -119,7 +123,7 @@ public class MainFXMLController implements Initializable
         tMesas.setCellValueFactory(new PropertyValueFactory<>("tMesas"));
         utilizacionMesas.setCellValueFactory(new PropertyValueFactory<>("utilizacionMesas"));
         
-        tblColas.getColumns().addAll(evento,reloj,rndLlegada1,tiempoEntreLlegada,proximaLlegada,
+        tblColas.getColumns().addAll(iteracion, evento,reloj,rndLlegada1,tiempoEntreLlegada,proximaLlegada,
                                     rndAccion, accion, sumMinutosEstadia,rndEntrega, entrega, rndAccion2,
                                     accion2,rndTConsumicion,tConsumicion,consumicion,rndTMesas,tMesas,utilizacionMesas);
         
@@ -130,18 +134,21 @@ public class MainFXMLController implements Initializable
     private void handleBtnSimular(ActionEvent event)
     {
         gestor = new Gestor(this);
-        
+        tblColas.getItems().clear();
+        txtPromedio.setText("-");
+        txtDatosSistema.clear();
+        contador = 0;
         int desde = Integer.parseInt(txtDesde.getText());
         int hasta = Integer.parseInt(txtHasta.getText());
         int cantidad = Integer.parseInt(txtCantIteraciones.getText());
         
-        double mediaLlegada = Double.parseDouble(lblMediaLlegada.getText())*60;
-        double desvEstLlegada  = Double.parseDouble(lblDesvEstLlegada.getText())*60;
+        double mediaLlegada = Double.parseDouble(lblMediaLlegada.getText());
+        double desvEstLlegada  = Double.parseDouble(lblDesvEstLlegada.getText());
         double tasaCompra = Double.parseDouble(lblTasaCompra.getText())/100;
         double tasaUtilizaMesa = Double.parseDouble(LblTasaUtilizaMesa.getText())/100;
         double tiempoCompraTicket = Double.parseDouble(lblTiempoCompraTicket.getText());
         double tasaOcupacionMesa = Double.parseDouble(lblTasaOcupacionMesa.getText())/100;
-        double lambdaEntregaPedido = Double.parseDouble(lblLambdaEntregaPedido.getText());
+        double lambdaEntregaPedido = 1 / Double.parseDouble(lblLambdaEntregaPedido.getText());
         double mediaUtilizacionMesa = Double.parseDouble(lblMediaUtilizacionMesa.getText())*60;
         double desvEstUtilizacionMesa = Double.parseDouble(lblDesvEstUtilizacionMesa.getText())*60;
         double mediaConsumicionPedido = Double.parseDouble(lblMediaConsumicionPedido.getText())*60;
@@ -154,16 +161,70 @@ public class MainFXMLController implements Initializable
         }
         
         gestor.simular(cantidad, mediaLlegada, desvEstLlegada, tasaCompra, tasaUtilizaMesa, tasaOcupacionMesa, 
-                tiempoCompraTicket, lambdaEntregaPedido, 1, 1, 
+                tiempoCompraTicket, lambdaEntregaPedido, 
                 mediaConsumicionPedido, desvEstConsumicionPedido, mediaUtilizacionMesa, desvEstUtilizacionMesa, 
                 tiempoDePaso, desde, hasta);
         
         
-        txtPromedio.setText(String.valueOf(gestor.getPromedio()));
+        txtPromedio.setText(this.tiempoString(gestor.getPromedio()));
+        txtDatosSistema.setText(gestor.toString());
     }
 
-    public void addRow(Evento eventoActual){
-        //Implementar//
+    public void addRow(Evento eventoActual, Long tiempoPermanencia){
+        contador++;
+        String evento = "-";
+        String reloj = Parametro.getInstancia().tiempoString();
+        String rndLlegada = "-";
+        String tiempoEntreLlegada = "-";
+        String proximaLlegada = "-";
+        String rndAccion = "-";
+        String accion = "-";
+        String sumMinutosEstadia = this.tiempoString(gestor.getTiempoPermanencia());
+        String rndEntrega = "-";
+        String entrega = "-";
+        String rndAccion2 = "-";
+        String accion2 = "-";
+        String rndTConsumicion = "-";
+        String tConsumicion = "-";
+        String consumicion = "-";
+        String rndTMesas = "-";
+        String tMesas = "-";
+        String utilizacionMesas = "-";
+
+        if(eventoActual instanceof LlegadaCliente){
+            evento = "Llegada Cliente";
+            LlegadaCliente eventoAux = (LlegadaCliente)eventoActual;
+            
+            rndLlegada = String.valueOf(eventoAux.getRndLlegadaCliente());
+            tiempoEntreLlegada=this.tiempoString((long)eventoAux.getRndLlegadaCliente());
+            proximaLlegada =this.tiempoString(eventoAux.getLlegadaSiguienteCliente());
+            rndAccion = String.valueOf(eventoAux.getRndAccion1());
+            accion = eventoAux.getAccion1();
+            
+        }else if(eventoActual instanceof FinCompra){
+            evento = "Fin Compra";
+            FinCompra eventoAux = (FinCompra)eventoActual;
+            
+        }else if (eventoActual instanceof FinConsumicionPedido){
+            evento = "Fin Consumicion Pedido";
+            FinConsumicionPedido eventoAux = (FinConsumicionPedido)eventoActual;
+            
+        }else if (eventoActual instanceof FinUtilizacionMesa){
+            evento = "Fin Utilizacion Mesa";
+            FinUtilizacionMesa eventoAux = (FinUtilizacionMesa)eventoActual;
+            
+        }else if (eventoActual instanceof FinEntregaPedido){
+            evento = "Fin Entrega Pedido";
+            FinEntregaPedido eventoAux = (FinEntregaPedido)eventoActual;
+            
+        }else if (eventoActual instanceof FinEstarDePaso){
+            evento = "Fin Estar De Paso";
+            FinEstarDePaso eventoAux = (FinEstarDePaso)eventoActual;
+            
+        }
+        
+        Row r = new Row(String.valueOf(contador), evento, reloj, rndLlegada, tiempoEntreLlegada, proximaLlegada, rndAccion, accion, sumMinutosEstadia, rndEntrega, entrega, rndAccion2, accion2, rndTConsumicion, tConsumicion, consumicion, rndTMesas, tMesas, utilizacionMesas);
+        tblColas.getItems().add(r);
     }
 
     @FXML
@@ -195,11 +256,24 @@ public class MainFXMLController implements Initializable
         lblTiempoDePaso.setText("1");
     }
 
+    public final String tiempoString(long tiempo){
+        
+        long horas = tiempo / 3600;
+        long minutos = (tiempo - horas*3600) / 60;
+        long segundos2 =  tiempo - (horas*3600 + minutos*60);
+        String ceroH = "", ceroM = "", ceroS = "";
+        if( horas < 10 ) ceroH = "0";
+        if( minutos < 10 ) ceroM = "0";
+        if( segundos2 < 10 ) ceroS = "0";
+        
+        return ceroH + horas + ":"  + ceroM + minutos + ":" + ceroS + segundos2;
+    }
+    
     
     //poner las columnas necesarias!!!
     public static class Row
     {
-
+        private final SimpleStringProperty iteracion;
         private final SimpleStringProperty evento;
         private final SimpleStringProperty reloj;
         private final SimpleStringProperty rndLlegada;
@@ -207,7 +281,7 @@ public class MainFXMLController implements Initializable
         private final SimpleStringProperty proximaLlegada;
         private final SimpleStringProperty rndAccion;
         private final SimpleStringProperty accion;
-        private final SimpleStringProperty SumMinutosEstadia;
+        private final SimpleStringProperty sumMinutosEstadia;
         private final SimpleStringProperty rndEntrega;
         private final SimpleStringProperty entrega;
         private final SimpleStringProperty rndAccion2;
@@ -219,10 +293,11 @@ public class MainFXMLController implements Initializable
         private final SimpleStringProperty tMesas;
         private final SimpleStringProperty utilizacionMesas;
 
-        private Row(String evento, String reloj, String rndLlegada, String tiempoEntreLlegada, String proximaLlegada, String rndAccion,
-                     String accion, String SumMinutosEstadia, String rndEntrega, String entrega, String rndAccion2, String accion2,
+        private Row(String iteracion, String evento, String reloj, String rndLlegada, String tiempoEntreLlegada, String proximaLlegada, String rndAccion,
+                     String accion, String sumMinutosEstadia, String rndEntrega, String entrega, String rndAccion2, String accion2,
                      String rndTConsumicion, String tConsumicion, String consumicion, String rndTMesas,String tMesas,String utilizacionMesas)
         {
+            this.iteracion = new SimpleStringProperty(iteracion);
             this.evento = new SimpleStringProperty(evento);
             this.reloj = new SimpleStringProperty(reloj);
             this.rndLlegada = new SimpleStringProperty(rndLlegada);
@@ -230,7 +305,7 @@ public class MainFXMLController implements Initializable
             this.proximaLlegada = new SimpleStringProperty(proximaLlegada);
             this.rndAccion = new SimpleStringProperty(rndAccion);
             this.accion = new SimpleStringProperty(accion);
-            this.SumMinutosEstadia = new SimpleStringProperty(SumMinutosEstadia);
+            this.sumMinutosEstadia = new SimpleStringProperty(sumMinutosEstadia);
             this.rndEntrega = new SimpleStringProperty(rndEntrega);
             this.entrega = new SimpleStringProperty(entrega);
             this.rndAccion2 = new SimpleStringProperty(rndAccion2);
@@ -243,11 +318,10 @@ public class MainFXMLController implements Initializable
             this.utilizacionMesas = new SimpleStringProperty(utilizacionMesas);
         }
 
-//        public void setNroExperimento(String asd)
-//        {
-//            nroExperimento.set(asd);
-//        }
-
+        public String getIteracion() {
+            return iteracion.get();
+        }
+        
         public String getEvento() {
             return evento.get();
         }
@@ -277,7 +351,7 @@ public class MainFXMLController implements Initializable
         }
 
         public String getSumMinutosEstadia() {
-            return SumMinutosEstadia.get();
+            return sumMinutosEstadia.get();
         }
 
         public String getRndEntrega() {
