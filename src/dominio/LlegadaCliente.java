@@ -16,6 +16,7 @@ public class LlegadaCliente extends Evento {
     private double rndAccion1;
     private long llegadaSiguienteCliente;
     private String accion1;
+    private String rndAndTiempoUtilizaMesa;
     
     private double rndLlegadaProximoCliente;
     
@@ -65,7 +66,7 @@ public class LlegadaCliente extends Evento {
             
         } else if ( rndAccion1 < (g.getTasaCompra()+g.getTasaUtilizacionMesa())){
             accion1 = "Ocupa Mesa";
-            this.ocuparMesa(this.cliente);
+            rndAndTiempoUtilizaMesa = this.ocuparMesa(this.cliente);
         } else {
             accion1 = "Esta de Paso";
             this.estarDePaso(this.cliente);
@@ -133,6 +134,22 @@ public class LlegadaCliente extends Evento {
 
     public void setRndLlegadaProximoCliente(double rndLlegadaProximoCliente) {
         this.rndLlegadaProximoCliente = rndLlegadaProximoCliente;
+    }
+
+    public String getRndAndTiempoUtilizaMesa() {
+        return rndAndTiempoUtilizaMesa;
+    }
+
+    public void setRndAndTiempoUtilizaMesa(String rndAndTiempoUtilizaMesa) {
+        this.rndAndTiempoUtilizaMesa = rndAndTiempoUtilizaMesa;
+    }
+
+    public long getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(long tiempo) {
+        this.tiempo = tiempo;
     }
     
     

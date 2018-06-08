@@ -94,38 +94,32 @@ public class MainFXMLController implements Initializable
         TableColumn entrega = new TableColumn("Entrega");
         TableColumn rndAccion2 = new TableColumn("RND Accion 2");
         TableColumn accion2 = new TableColumn("Accion 2");
-        TableColumn rndTConsumicion = new TableColumn("RND Tiempo Consumicion");
-        TableColumn tConsumicion = new TableColumn("Tiempo Consumicion");
-        TableColumn consumicion = new TableColumn("Consumicion");
-        TableColumn rndTMesas = new TableColumn("RND T de Mesas");
-        TableColumn tMesas = new TableColumn("T de Mesas");
-        TableColumn utilizacionMesas = new TableColumn("Utilizacion Mesas");
+        TableColumn rndTConsumicion = new TableColumn("RND Tiempo fin Consumicion");
+        TableColumn tiempConsumicion = new TableColumn("Tiempo Fin Consumicion");
+        TableColumn rndTMesas = new TableColumn("RND T en Mesas");
+        TableColumn tiempMesas = new TableColumn("T hasta fin en Mesas");
         
         iteracion.setCellValueFactory(new PropertyValueFactory<>("iteracion"));
         evento.setCellValueFactory(new PropertyValueFactory<>("evento"));
         reloj.setCellValueFactory(new PropertyValueFactory<>("reloj"));
         rndLlegada1.setCellValueFactory(new PropertyValueFactory<>("rndLlegada"));
-        //rndLlegada2.setCellValueFactory(new PropertyValueFactory<>("rndLlegada2"));
         tiempoEntreLlegada.setCellValueFactory(new PropertyValueFactory<>("tiempoEntreLlegada"));
         proximaLlegada.setCellValueFactory(new PropertyValueFactory<>("proximaLlegada"));
         rndAccion.setCellValueFactory(new PropertyValueFactory<>("rndAccion"));
         accion.setCellValueFactory(new PropertyValueFactory<>("accion"));
         sumMinutosEstadia.setCellValueFactory(new PropertyValueFactory<>("sumMinutosEstadia"));
-        //ticket.setCellValueFactory(new PropertyValueFactory<>("ticket"));
         rndEntrega.setCellValueFactory(new PropertyValueFactory<>("rndEntrega"));
         entrega.setCellValueFactory(new PropertyValueFactory<>("entrega"));
         rndAccion2.setCellValueFactory(new PropertyValueFactory<>("rndAccion2"));
         accion2.setCellValueFactory(new PropertyValueFactory<>("accion2"));
         rndTConsumicion.setCellValueFactory(new PropertyValueFactory<>("rndTConsumicion"));
-        tConsumicion.setCellValueFactory(new PropertyValueFactory<>("tConsumicion"));
-        consumicion.setCellValueFactory(new PropertyValueFactory<>("consumicion"));
+        tiempConsumicion.setCellValueFactory(new PropertyValueFactory<>("tiempConsumicion"));
         rndTMesas.setCellValueFactory(new PropertyValueFactory<>("rndTMesas"));
-        tMesas.setCellValueFactory(new PropertyValueFactory<>("tMesas"));
-        utilizacionMesas.setCellValueFactory(new PropertyValueFactory<>("utilizacionMesas"));
+        tiempMesas.setCellValueFactory(new PropertyValueFactory<>("tiempMesas"));
         
         tblColas.getColumns().addAll(iteracion, evento,reloj,rndLlegada1,tiempoEntreLlegada,proximaLlegada,
                                     rndAccion, accion, sumMinutosEstadia,rndEntrega, entrega, rndAccion2,
-                                    accion2,rndTConsumicion,tConsumicion,consumicion,rndTMesas,tMesas,utilizacionMesas);
+                                    accion2,rndTConsumicion,tiempConsumicion,rndTMesas,tiempMesas);
         
         tblColas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
@@ -185,11 +179,9 @@ public class MainFXMLController implements Initializable
         String rndAccion2 = "-";
         String accion2 = "-";
         String rndTConsumicion = "-";
-        String tConsumicion = "-";
-        String consumicion = "-";
+        String tiempConsumicion = "-";
         String rndTMesas = "-";
-        String tMesas = "-";
-        String utilizacionMesas = "-";
+        String tiempMesas = "-";
 
         if(eventoActual instanceof LlegadaCliente){
             evento = "Llegada Cliente";
@@ -201,10 +193,20 @@ public class MainFXMLController implements Initializable
             rndAccion = String.valueOf(eventoAux.getRndAccion1());
             accion = eventoAux.getAccion1();
             
-        }else if(eventoActual instanceof FinCompra){
-            evento = "Fin Compra";
-            FinCompra eventoAux = (FinCompra)eventoActual;
+            if(eventoAux.getAccion1().equals("Ocupa Mesa")){
+                String[] aux = eventoAux.getRndAndTiempoUtilizaMesa().split("-");
+                rndTMesas = aux[0];
+                tiempMesas = aux[1];
+            }
             
+        } else if (eventoActual instanceof FinCompra) {
+            evento = "Fin Compra";
+            FinCompra eventoAux = (FinCompra) eventoActual;
+
+            String[] aux = eventoAux.getRndAndTiempoEntregaPedido().split("-");
+            rndEntrega = aux[0];
+            entrega = aux[1];
+
         }else if (eventoActual instanceof FinConsumicionPedido){
             evento = "Fin Consumicion Pedido";
             FinConsumicionPedido eventoAux = (FinConsumicionPedido)eventoActual;
@@ -215,7 +217,23 @@ public class MainFXMLController implements Initializable
             
         }else if (eventoActual instanceof FinEntregaPedido){
             evento = "Fin Entrega Pedido";
-            FinEntregaPedido eventoAux = (FinEntregaPedido)eventoActual;
+            FinEntregaPedido eventoAux = (FinEntregaPedido) eventoActual;
+
+            if (eventoAux.getRndAndTimeNextEntrega() != null) {
+                String[] aux = eventoAux.getRndAndTimeNextEntrega().split("-");
+                rndEntrega = aux[0];
+                entrega = aux[1];
+            }
+            
+            
+            rndAccion2 = String.valueOf(eventoAux.getRndAccion2());
+            accion2 = eventoAux.getAccion2();
+            
+            if(accion2.equals("Utiliza Mesa")){
+                String[] aux = eventoAux.getRndAndTiempoConsumicion().split("-");
+                rndTConsumicion = aux[0];
+                tiempConsumicion = aux[1];
+            }
             
         }else if (eventoActual instanceof FinEstarDePaso){
             evento = "Fin Estar De Paso";
@@ -223,7 +241,7 @@ public class MainFXMLController implements Initializable
             
         }
         
-        Row r = new Row(String.valueOf(contador), evento, reloj, rndLlegada, tiempoEntreLlegada, proximaLlegada, rndAccion, accion, sumMinutosEstadia, rndEntrega, entrega, rndAccion2, accion2, rndTConsumicion, tConsumicion, consumicion, rndTMesas, tMesas, utilizacionMesas);
+        Row r = new Row(String.valueOf(contador), evento, reloj, rndLlegada, tiempoEntreLlegada, proximaLlegada, rndAccion, accion, sumMinutosEstadia, rndEntrega, entrega, rndAccion2, accion2, rndTConsumicion, tiempConsumicion, rndTMesas, tiempMesas);
         tblColas.getItems().add(r);
     }
 
@@ -269,8 +287,6 @@ public class MainFXMLController implements Initializable
         return ceroH + horas + ":"  + ceroM + minutos + ":" + ceroS + segundos2;
     }
     
-    
-    //poner las columnas necesarias!!!
     public static class Row
     {
         private final SimpleStringProperty iteracion;
@@ -287,15 +303,14 @@ public class MainFXMLController implements Initializable
         private final SimpleStringProperty rndAccion2;
         private final SimpleStringProperty accion2;
         private final SimpleStringProperty rndTConsumicion;
-        private final SimpleStringProperty tConsumicion;
-        private final SimpleStringProperty consumicion;
+        private final SimpleStringProperty tiempConsumicion;
         private final SimpleStringProperty rndTMesas;
-        private final SimpleStringProperty tMesas;
-        private final SimpleStringProperty utilizacionMesas;
+        private final SimpleStringProperty tiempMesas;
+
 
         private Row(String iteracion, String evento, String reloj, String rndLlegada, String tiempoEntreLlegada, String proximaLlegada, String rndAccion,
                      String accion, String sumMinutosEstadia, String rndEntrega, String entrega, String rndAccion2, String accion2,
-                     String rndTConsumicion, String tConsumicion, String consumicion, String rndTMesas,String tMesas,String utilizacionMesas)
+                     String rndTConsumicion, String tiempConsumicion, String rndTMesas,String tiempMesas)
         {
             this.iteracion = new SimpleStringProperty(iteracion);
             this.evento = new SimpleStringProperty(evento);
@@ -311,11 +326,10 @@ public class MainFXMLController implements Initializable
             this.rndAccion2 = new SimpleStringProperty(rndAccion2);
             this.accion2 = new SimpleStringProperty(accion2);
             this.rndTConsumicion = new SimpleStringProperty(rndTConsumicion);
-            this.tConsumicion = new SimpleStringProperty(tConsumicion);
-            this.consumicion = new SimpleStringProperty(consumicion);
+            this.tiempConsumicion = new SimpleStringProperty(tiempConsumicion);
             this.rndTMesas = new SimpleStringProperty(rndTMesas);
-            this.tMesas = new SimpleStringProperty(tMesas);
-            this.utilizacionMesas = new SimpleStringProperty(utilizacionMesas);
+            this.tiempMesas = new SimpleStringProperty(tiempMesas);
+
         }
 
         public String getIteracion() {
@@ -374,24 +388,16 @@ public class MainFXMLController implements Initializable
             return rndTConsumicion.get();
         }
 
-        public String gettConsumicion() {
-            return tConsumicion.get();
-        }
-
-        public String getConsumicion() {
-            return consumicion.get();
+        public String getTiempConsumicion() {
+            return tiempConsumicion.get();
         }
 
         public String getRndTMesas() {
             return rndTMesas.get();
         }
 
-        public String gettMesas() {
-            return tMesas.get();
-        }
-
-        public String getUtilizacionMesas() {
-            return utilizacionMesas.get();
+        public String getTiempMesas() {
+            return tiempMesas.get();
         }
 
     }

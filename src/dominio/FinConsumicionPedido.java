@@ -11,11 +11,13 @@ package dominio;
  */
 public class FinConsumicionPedido extends Evento{
     private Cliente cliente;
+    private long rndTiempo;
     
     public FinConsumicionPedido(Gestor g, Cliente cliente) {
         super(g);
         this.cliente = cliente;
-        this.tiempo = calcularTiempo() + Parametro.getInstancia().getTiempoActual();
+        this.rndTiempo = calcularTiempo();
+        this.tiempo = rndTiempo + Parametro.getInstancia().getTiempoActual();
     }
     
     @Override
@@ -51,6 +53,11 @@ public class FinConsumicionPedido extends Evento{
     @Override
     public long calcularTiempo() {
         return (long) (g.getGeneradorConsumicionPedido().rnd());
+    }
+
+    String getRNDandTiempo() {
+        String r =String.valueOf(rndTiempo)+"-"+String.valueOf(this.tiempoString());
+        return r;
     }
     
 }

@@ -44,7 +44,7 @@ public abstract class Evento implements Comparable<Evento> {
         }
         
     }
-    protected void servirCliente(Cliente cliente, EmpleadoEntrega empleado){
+    protected String servirCliente(Cliente cliente, EmpleadoEntrega empleado){
         cliente.setEstado(EstadoCliente.RECIBIENDO_ENTREGA);
         empleado.setEstado(EstadoEmpleadoEntrega.ATENDIENDO);
         
@@ -52,25 +52,28 @@ public abstract class Evento implements Comparable<Evento> {
         while(!this.g.getConjuntoEventos().add(evento)){
             evento.corregir();
         }
+        return evento.getRndAndTiempoEntregaPedido();
         
         
     }
-    protected void ocuparMesa(Cliente cliente){
+    protected String ocuparMesa(Cliente cliente){
         cliente.setEstado(EstadoCliente.OCUPANDO_MESA);
         
         FinUtilizacionMesa evento = new FinUtilizacionMesa(g, cliente);
         while(!this.g.getConjuntoEventos().add(evento)){
             evento.corregir();
         }
+        return evento.getRNDandTiempo();
     }
     
-    protected void consumirPedidoEnMesa(Cliente cliente){
+    protected String consumirPedidoEnMesa(Cliente cliente){
         cliente.setEstado(EstadoCliente.CONSUMIENDO_PEDIDO_EN_MESA);
         
         FinConsumicionPedido evento = new FinConsumicionPedido(g, cliente);
         while(!this.g.getConjuntoEventos().add(evento)){
             evento.corregir();
         }
+        return evento.getRNDandTiempo();
     }
     
     protected void estarDePaso(Cliente cliente){

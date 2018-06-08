@@ -12,6 +12,7 @@ package dominio;
 public class FinCompra extends Evento{
     
     private Cliente cliente;
+    private String rndAndTiempoEntregaPedido;
     
     public FinCompra(Gestor g, Cliente cliente) {
         super(g);
@@ -54,10 +55,11 @@ public class FinCompra extends Evento{
         }
         
         if(g.getEmpleadosEntrega().hayEmpleadoLibre()){
-            this.servirCliente(cliente,g.getEmpleadosEntrega().getEmpleadoLibre());
+            rndAndTiempoEntregaPedido = this.servirCliente(cliente,g.getEmpleadosEntrega().getEmpleadoLibre());
         }else{
             this.cliente.setEstado(EstadoCliente.EN_COLA);
             g.getColaClientesEntregaPedido().agregarItem(this.cliente);
+            rndAndTiempoEntregaPedido = "EN COLA-EN COLA";
         }
         
     }
@@ -71,5 +73,14 @@ public class FinCompra extends Evento{
     public String getNombre() {
         return "Fin de compra" +this.cliente.getNumero();
     }
+
+    public String getRndAndTiempoEntregaPedido() {
+        return rndAndTiempoEntregaPedido;
+    }
+
+    public void setRndAndTiempoEntregaPedido(String rndAndTiempoEntregaPedido) {
+        this.rndAndTiempoEntregaPedido = rndAndTiempoEntregaPedido;
+    }
+    
     
 }
