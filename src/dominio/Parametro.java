@@ -64,4 +64,9 @@ public class Parametro {
         
         return ceroH + horas + ":"  + ceroM + minutos + ":" + ceroS + segundos2;
     }
+    
+    public void reiniciar() {
+        this.ultimoNumeroCliente = 0; 
+        this.tiempoActual = 0;
+    }
 }

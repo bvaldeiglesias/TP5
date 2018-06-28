@@ -98,6 +98,11 @@ public class MainFXMLController implements Initializable
         TableColumn tiempConsumicion = new TableColumn("Tiempo Fin Consumicion");
         TableColumn rndTMesas = new TableColumn("RND T en Mesas");
         TableColumn tiempMesas = new TableColumn("T hasta fin en Mesas");
+        TableColumn colaCaja = new TableColumn("Cola caja");
+        TableColumn estadoCaja = new TableColumn("Estado Caja");
+        TableColumn colaEntrega = new TableColumn("Cola Entrega");
+        TableColumn estadoEmp1 = new TableColumn("Estado Empleado 1");
+        TableColumn estadoEmp2 = new TableColumn("Estado Empleado 2");
         
         iteracion.setCellValueFactory(new PropertyValueFactory<>("iteracion"));
         evento.setCellValueFactory(new PropertyValueFactory<>("evento"));
@@ -116,10 +121,17 @@ public class MainFXMLController implements Initializable
         tiempConsumicion.setCellValueFactory(new PropertyValueFactory<>("tiempConsumicion"));
         rndTMesas.setCellValueFactory(new PropertyValueFactory<>("rndTMesas"));
         tiempMesas.setCellValueFactory(new PropertyValueFactory<>("tiempMesas"));
+         colaCaja.setCellValueFactory(new PropertyValueFactory<>("colaCaja"));
+         estadoCaja.setCellValueFactory(new PropertyValueFactory<>("estadoCaja"));
+         colaEntrega.setCellValueFactory(new PropertyValueFactory<>("colaEntrega"));
+         estadoEmp1.setCellValueFactory(new PropertyValueFactory<>("estadoEmp1"));
+         estadoEmp2.setCellValueFactory(new PropertyValueFactory<>("estadoEmp2"));
+        
         
         tblColas.getColumns().addAll(iteracion, evento,reloj,rndLlegada1,tiempoEntreLlegada,proximaLlegada,
                                     rndAccion, accion, sumMinutosEstadia,rndEntrega, entrega, rndAccion2,
-                                    accion2,rndTConsumicion,tiempConsumicion,rndTMesas,tiempMesas);
+                                    accion2,rndTConsumicion,tiempConsumicion,rndTMesas,tiempMesas, colaCaja,
+                                    estadoCaja, colaEntrega, estadoEmp1,estadoEmp2);
         
         tblColas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
@@ -182,6 +194,11 @@ public class MainFXMLController implements Initializable
         String tiempConsumicion = "-";
         String rndTMesas = "-";
         String tiempMesas = "-";
+        String colaCaja = String.valueOf(gestor.getColaClientesCaja().clientesEnCola());
+        String estadoCaja = gestor.getCaja().getEstado().getName();
+        String colaEntrega = String.valueOf(gestor.getColaClientesEntregaPedido().clientesEnCola());
+        String estadoEmp1 = gestor.getEmpleadosEntrega().getEmpleado1().getEstado().getName();
+        String estadoEmp2 = gestor.getEmpleadosEntrega().getEmpleado2().getEstado().getName();
 
         if(eventoActual instanceof LlegadaCliente){
             evento = "Llegada Cliente";
@@ -241,7 +258,8 @@ public class MainFXMLController implements Initializable
             
         }
         
-        Row r = new Row(String.valueOf(contador), evento, reloj, rndLlegada, tiempoEntreLlegada, proximaLlegada, rndAccion, accion, sumMinutosEstadia, rndEntrega, entrega, rndAccion2, accion2, rndTConsumicion, tiempConsumicion, rndTMesas, tiempMesas);
+        Row r = new Row(String.valueOf(contador), evento, reloj, rndLlegada, tiempoEntreLlegada, proximaLlegada, rndAccion, accion, sumMinutosEstadia, rndEntrega, entrega, rndAccion2, accion2, rndTConsumicion, tiempConsumicion, rndTMesas, tiempMesas, colaCaja,
+                                    estadoCaja, colaEntrega, estadoEmp1,estadoEmp2);
         tblColas.getItems().add(r);
     }
 
@@ -306,11 +324,17 @@ public class MainFXMLController implements Initializable
         private final SimpleStringProperty tiempConsumicion;
         private final SimpleStringProperty rndTMesas;
         private final SimpleStringProperty tiempMesas;
+        private final SimpleStringProperty colaCaja;
+        private final SimpleStringProperty estadoCaja;
+        private final SimpleStringProperty colaEntrega; 
+        private final SimpleStringProperty estadoEmp1;
+        private final SimpleStringProperty estadoEmp2;
 
 
         private Row(String iteracion, String evento, String reloj, String rndLlegada, String tiempoEntreLlegada, String proximaLlegada, String rndAccion,
                      String accion, String sumMinutosEstadia, String rndEntrega, String entrega, String rndAccion2, String accion2,
-                     String rndTConsumicion, String tiempConsumicion, String rndTMesas,String tiempMesas)
+                     String rndTConsumicion, String tiempConsumicion, String rndTMesas,String tiempMesas,String colaCaja,
+                                    String estadoCaja, String colaEntrega, String estadoEmp1,String estadoEmp2)
         {
             this.iteracion = new SimpleStringProperty(iteracion);
             this.evento = new SimpleStringProperty(evento);
@@ -329,6 +353,11 @@ public class MainFXMLController implements Initializable
             this.tiempConsumicion = new SimpleStringProperty(tiempConsumicion);
             this.rndTMesas = new SimpleStringProperty(rndTMesas);
             this.tiempMesas = new SimpleStringProperty(tiempMesas);
+            this.colaCaja = new SimpleStringProperty(colaCaja);
+            this.estadoCaja = new SimpleStringProperty(estadoCaja);
+            this.colaEntrega = new SimpleStringProperty(colaEntrega);
+            this.estadoEmp1 = new SimpleStringProperty(estadoEmp1);
+            this.estadoEmp2 = new SimpleStringProperty(estadoEmp2);
 
         }
 
@@ -399,7 +428,22 @@ public class MainFXMLController implements Initializable
         public String getTiempMesas() {
             return tiempMesas.get();
         }
-
+        
+        public String getColaCaja() {
+            return colaCaja.get();
+        }
+        public String getEstadoCaja() {
+            return estadoCaja.get();
+        }
+        public String getColaEntrega() {
+            return colaEntrega.get();
+        }
+        public String getEstadoEmp1() {
+            return estadoEmp1.get();
+        }
+        public String getEstadoEmp2() {
+            return estadoEmp2.get();
+        }
     }
 
 }

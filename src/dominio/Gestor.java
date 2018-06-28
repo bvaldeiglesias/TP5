@@ -58,6 +58,8 @@ public class Gestor {
                         double mediaUtilizacionMesa, double desvStanUtilizacionMesa,double tiempoDePaso,
                         int desde, int hasta){
         
+        Parametro.getInstancia().reiniciar();
+        
         this.cantIteraciones = cantIteraciones;
         
         this.tasaCompra = tasaCompra;

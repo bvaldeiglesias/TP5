@@ -72,4 +72,10 @@ public class ConjuntoEmpleados {
     }
     
     
+    public EmpleadoEntrega getEmpleado1(){
+        return this.list.get(0);
+    }
+    public EmpleadoEntrega getEmpleado2(){
+        return this.list.get(1);
+    }
 }
